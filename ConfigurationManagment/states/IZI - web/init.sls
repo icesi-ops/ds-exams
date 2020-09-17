@@ -3,7 +3,7 @@ include:
 
 install_npm_dependencies:
     npm.bootstrap:
-      - name: /srv/ds-exams/aik-app-api
+      - name: /srv/ds-exams/
 
 run_front:
     cmd.run:
