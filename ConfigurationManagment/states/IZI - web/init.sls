@@ -1,14 +1,30 @@
 include:
     - nodejs
+    
+python-pip:
+  pkg.installed
 
-install_npm_dependencies:
+install_back_dependencies:
+    pip.installed:
+      - bin_env: '/usr/bin/pip'
+      - require:
+        - pkg: python-pip
+      - pkgs:
+        - flask_cors
+        - marshmallow
+        - pymongo
+        - pyjwt
+        - flask
+        - pipenv
+
+install_front_npm_dependencies:
     npm.bootstrap:
-      - name: /srv/ds-exams/
+      - name: /srv/ds-exams/app/http/app
 
 run_front:
     cmd.run:
-      - name: "node /srv/ds-exams/Front-end/server.js"
+      - name: "cd /srv/ds-exams/app/http/app && npm start"
 
 run_back:
     cmd.run:
-      - name: "node /srv/ds-exams/Back-end/server.js"
+      - name: "cd /srv/ds-exams/app && FLASK_APP=$PWD/app/http/api/endpoints.py FLASK_ENV=development pipenv run python -m flask run --port 4433"
