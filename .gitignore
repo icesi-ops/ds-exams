@@ -1,0 +1,23 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/aplicacionweb/frontend/ebookslibraryapp/node_modules
+/aplicacionweb/frontend/ebookslibraryapp/.pnp
+/aplicacionweb/frontend/ebookslibraryapp.pnp.js
+
+# testing
+/aplicacionweb/frontend/ebookslibraryapp/coverage
+
+# production
+/aplicacionweb/frontend/ebookslibraryapp/build
+
+# misc
+/aplicacionweb/frontend/ebookslibraryapp/.DS_Store
+/aplicacionweb/frontend/ebookslibraryapp/.env.local
+/aplicacionweb/frontend/ebookslibraryapp/.env.development.local
+/aplicacionweb/frontend/ebookslibraryapp/.env.test.local
+/aplicacionweb/frontend/ebookslibraryapp/.env.production.local
+
+/aplicacionweb/frontend/ebookslibraryapp/npm-debug.log*
+/aplicacionweb/frontend/ebookslibraryapp/yarn-debug.log*
+/aplicacionweb/frontend/ebookslibraryapp/yarn-error.log*

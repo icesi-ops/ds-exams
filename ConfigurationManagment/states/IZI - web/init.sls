@@ -1,6 +1,6 @@
 include:
     - nodejs
-  
+    
 python-pip:
   pkg.installed
 

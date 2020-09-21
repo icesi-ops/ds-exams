@@ -14,4 +14,4 @@ flask-cors = "==3.0.7"
 ipdb = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.6.9"
