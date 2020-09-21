@@ -2,15 +2,15 @@ base:
 
   'roles:web':
     - match: grain
-    - aik-ui
-    - nodejs
+    - IZI - web
+    - IZI - nodejs
 
   'roles:db':
     - match: grain
-    - aik-api
-    - nodejs
+    - IZI - db
+    - IZI - nodejs
 
   'roles:lb':
     - match: grain
-    - aik-api
-    - nodejs
+    - IZI - lb
+    - IZI - nodejs
