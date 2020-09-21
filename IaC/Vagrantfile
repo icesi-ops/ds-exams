@@ -26,6 +26,7 @@ Vagrant.configure("2") do |config|
       #  }
        
       #end  
+      lb.vm.provision "shell", inline: "ls -lh /sbin/mount.vboxsf && sudo ln -sf /opt/VBoxGuestAdditions-*/lib/VBoxGuestAdditions/mount.vboxsf /sbin/mount.vboxsf"
     end
   
     config.ssh.insert_key = false
@@ -37,6 +38,15 @@ Vagrant.configure("2") do |config|
        web.vm.provider "virtualbox" do |vb|
         vb.customize ["modifyvm", :id, "--memory", "512", "--cpus", "1", "--name", "web-#{i}"]
        end
+      ####### File Share #######
+      config.vm.synced_folder '../ConfigurationManagment/states', '/srv/salt'
+      config.vm.synced_folder '../ConfigurationManagment/pillars', '/srv/pillar'  
+      ####### Provision #######
+      config.vm.provision :salt do |salt|
+        salt.masterless = true
+        salt.run_highstate = true
+        salt.verbose = true
+      end
        #CAMBIAR ESTO A SALTSTACK
        #web.vm.provision "ansible" do |ansible|
        # ansible.playbook = "playbooks/httpd/webserver.yml"
@@ -47,32 +57,11 @@ Vagrant.configure("2") do |config|
     end
    end
   
-    config.vm.define "front" do |front|
-      front.vm.box = "generic/ubuntu1804"
-      front.vm.hostname = "front"
-      front.vm.network "forwarded_port", guest: 8080, host: 8080
-      front.vm.provision "shell", cd inline: "sudo apt-get update"
-      front.vm.provision "shell", inline: "sudo curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -"
-      front.vm.provision "shell", inline: "sudo apt-get install -y nodejs"
-      #si no funciona, reemplazar lo de arriba por       front.vm.provision "shell", inline: "sudo apt-get install -y nodejs"
-      front.vm.provision "shell", inline: "sudo apt-get install npm --yes"
-      front.vm.provision "shell", inline: "sudo npm install -g create-react-app --yes"
-      front.vm.provision "shell", inline: "sudo create-react-app appprueba"
-      front.vm.provision "shell", inline: "cd appprueba"    
-      front.vm.provision "shell", inline: "npm start" 
-    end
-
     config.vm.define "db" do |db|
      db.vm.box = "centos/7"
      db.vm.hostname = "db"
      db.vm.network "private_network", ip: "192.168.33.100"
      db.vm.provision "shell", inline: "echo Iam DB server"
-
      #APROVISIONAR LA BASE DE DATOS
     end
   end
-
-
-
-
-
