@@ -2,15 +2,15 @@ base:
 
   'roles:web':
     - match: grain
-    - IZI - web
-    - IZI - nodejs
+    - IZI-web
+    - IZI-nodejs
 
   'roles:db':
     - match: grain
-    - IZI - db
-    - IZI - nodejs
+    - IZI-db
+    - IZI-nodejs
 
   'roles:lb':
     - match: grain
-    - IZI - lb
-    - IZI - nodejs
+    - IZI-lb
+    - IZI-nodejs

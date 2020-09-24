@@ -41,6 +41,9 @@ Vagrant.configure("2") do |config|
        web.vm.provider "virtualbox" do |vb|
         vb.customize ["modifyvm", :id, "--memory", "512", "--cpus", "1", "--name", "web-#{i}"]
        end
+       web.vm.provision "file", source: "./Scripts/web.sh", destination: "/srv/sc.sh"
+       web.vm.provision "shell",
+         inline: "cd /srv && chmod +x sc.sh && ./sc.sh", run: 'always'
       ####### File Share #######
       config.vm.synced_folder '../ConfigurationManagment/states', '/srv/salt'
       config.vm.synced_folder '../ConfigurationManagment/pillars', '/srv/pillar'  
