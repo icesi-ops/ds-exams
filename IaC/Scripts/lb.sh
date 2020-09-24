@@ -3,6 +3,8 @@ sudo yum update -y
 sudo yum install -y git 
 # Clone our repository
 sudo git clone https://github.com/SebastianUrbano/ds-exams.git
+# Install Haproxy
+sudo yum install haproxy -y
 # Install SaltStack
 sudo curl -L https://bootstrap.saltstack.com -o bootstrap_salt.sh
 sudo sh bootstrap_salt.sh

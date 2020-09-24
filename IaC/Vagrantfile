@@ -7,13 +7,13 @@
 # you're doing.
 Vagrant.configure("2") do |config|
 
-  config.vm.define "lb" do |lb|
-      lb.vm.box = "centos/7"
-      lb.vm.hostname = "lb"
-      lb.vm.network "private_network", ip: "192.168.33.200"
-      lb.vm.provider "virtualbox" do |vb|
-       vb.customize ["modifyvm", :id, "--memory", "512", "--cpus", "1", "--name", "lb"]
-      end
+ # config.vm.define "lb" do |lb|
+ #   lb.vm.box = "centos/7"
+ #     lb.vm.hostname = "lb"
+ #     lb.vm.network "private_network", ip: "192.168.33.200"
+ #     lb.vm.provider "virtualbox" do |vb|
+ #      vb.customize ["modifyvm", :id, "--memory", "512", "--cpus", "1", "--name", "lb"]
+#      end
 
       # CAMBIAR POR LO DE SALTSTACK 
       #lb.vm.provision "ansible" do |ansible|
@@ -26,8 +26,11 @@ Vagrant.configure("2") do |config|
       #  }
        
       #end  
-      lb.vm.provision "shell", inline: "ls -lh /sbin/mount.vboxsf && sudo ln -sf /opt/VBoxGuestAdditions-*/lib/VBoxGuestAdditions/mount.vboxsf /sbin/mount.vboxsf"
-    end
+  
+  
+  
+  #    lb.vm.provision "shell", inline: "ls -lh /sbin/mount.vboxsf && sudo ln -sf /opt/VBoxGuestAdditions-*/lib/VBoxGuestAdditions/mount.vboxsf /sbin/mount.vboxsf"
+  #  end
   
     config.ssh.insert_key = false
     (1..2).each do |i|

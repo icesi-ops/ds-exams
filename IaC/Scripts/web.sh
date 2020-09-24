@@ -22,6 +22,7 @@ sudo yum install nodejs -y
 curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
 sudo rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
 sudo yum install yarn -y
+##ojo con lo que falta de react########
 # Install SaltStack
 sudo curl -L https://bootstrap.saltstack.com -o bootstrap_salt.sh
 sudo sh bootstrap_salt.sh
