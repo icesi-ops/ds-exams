@@ -10,8 +10,12 @@ yum install -y python3
 #Install pyenv and python2 por si las moscas :v
 yum install -y  gcc gcc-c++ make git patch openssl-devel zlib-devel readline-devel sqlite-devel bzip2-devel
 git clone git://github.com/yyuu/pyenv.git ~/.pyenv
-echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> .bashrc
-echo 'eval "$(pyenv init -)"' >> .bashrc
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+cat << _PYENVCONF_ >> ~/.zshrc
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+_PYENVCONF_
 pyenv install 2.7.10
 #Install Pip
 yum install python3-pip -y
@@ -27,7 +31,7 @@ sudo yum install yarn -y
 sudo curl -L https://bootstrap.saltstack.com -o bootstrap_salt.sh
 sudo sh bootstrap_salt.sh
 #Put custom minion config in place (for enabling masterless mode)
-sudo cp -r /srv/ds-exams/ConfigurationManagment/minion.d /etc/salt/
+sudo cp -r /srv/Scripts/ds-exams/ConfigurationManagment/minion.d /etc/salt/
 echo -e 'grains:\n roles:\n  - web' | sudo tee /etc/salt/minion.d/grains.conf
 # Doing provision with saltstack
 sudo salt-call state.apply
