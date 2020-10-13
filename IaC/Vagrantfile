@@ -45,7 +45,7 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder '../ConfigurationManagment/pillars', '/srv/pillar'  
     config.vm.synced_folder './Scripts', '/srv/Scripts' 
     ##### APROVISIONAR INICIAL DE LOS SERVIDORES #####  
-    web.vm.provision "shell",
+    config.vm.provision "shell",
      inline: "cd /srv/Scripts && chmod 777 lb.sh && ./lb.sh", run: 'always'
     ##### APROVISIONAMIENTO DE LOS SERVIDORES ##### 
     config.vm.provision :salt do |salt|
@@ -69,7 +69,7 @@ Vagrant.configure("2") do |config|
      config.vm.synced_folder '../ConfigurationManagment/pillars', '/srv/pillar'  
      config.vm.synced_folder './Scripts', '/srv/Scripts' 
      ##### APROVISIONAR INICIALMENTE LA BASE DE DATOS ##### 
-     web.vm.provision "shell",
+     config.vm.provision "shell",
       inline: "cd /srv/Scripts && chmod 777 db.sh && ./db.sh", run: 'always'     
       ##### APROVISIONAMIENTO DE LA BASE DE DATOS ##### 
       config.vm.provision :salt do |salt|
