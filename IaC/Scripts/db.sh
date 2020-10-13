@@ -9,6 +9,4 @@ sudo sh bootstrap_salt.sh
 #Put custom minion config in place (for enabling masterless mode)
 sudo cp -r /srv/ds-exams/ConfigurationManagment/minion.d /etc/salt/
 echo -e 'grains:\n roles:\n  - db' | sudo tee /etc/salt/minion.d/grains.conf
-
 # Doing provision with saltstack
-sudo salt-call state.apply

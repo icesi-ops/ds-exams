@@ -12,4 +12,3 @@ sudo sh bootstrap_salt.sh
 sudo cp -r /srv/ds-exams/ConfigurationManagment/minion.d /etc/salt/
 echo -e 'grains:\n roles:\n  - lb' | sudo tee /etc/salt/minion.d/grains.conf
 # Doing provision with saltstack
-sudo salt-call state.apply

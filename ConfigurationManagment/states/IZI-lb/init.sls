@@ -19,4 +19,3 @@ install_haproxy:
 run_haproxy:
   cmd.run:
     - name: sudo systemctl start haproxy
-
