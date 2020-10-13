@@ -19,6 +19,17 @@ _PYENVCONF_
 pyenv install 2.7.10
 #Install Pip
 sudo yum install python3-pip -y
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python get-pip.py
+sudo yum install python-pip
+#Install pip environment
+pip install pipenv
+	#Hasta aqui instala pip y pipenv, para todos---------------
+#Install pip packages
+pip install flask==1.0.2
+pip install marshmallow==2.16.3
+pip install pyjwt==1.7.1
+pip install flask_cors==3.0.7
 #Install Node and NPM
 curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
 sudo yum install nodejs -y

@@ -1,22 +1,3 @@
-include:
-    - nodejs
-    
-python-pip:
-  pkg.installed
-
-install_back_dependencies:
-    pip.installed:
-      - bin_env: '/usr/bin/pip'
-      - require:
-        - pkg: python-pip
-      - pkgs:
-        - flask_cors
-        - marshmallow
-        - pymongo
-        - pyjwt
-        - flask
-        - pipenv
-
 install_front_npm_dependencies:
     npm.bootstrap:
       - name: /srv/Scripts/ds-exams/app/http/app
