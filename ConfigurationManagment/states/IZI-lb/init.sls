@@ -18,5 +18,9 @@ install_haproxy:
 
 run_haproxy:
   cmd.run:
+<<<<<<< HEAD
     - name: sudo systemctl restart haproxy
 
+=======
+    - name: sudo systemctl start haproxy
+>>>>>>> 9a06e706b900018a12003ad3adaac440442ae1b8
