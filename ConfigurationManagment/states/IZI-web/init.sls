@@ -4,8 +4,8 @@ install_front_npm_dependencies:
 
 run_front:
     cmd.run:
-      - name: "cd /srv/Scripts/ds-exams/app/http/app && npm start"
+      - name: "cd /srv/Scripts/ds-exams/app/http/app && nohup npm start"
 
 run_back:
     cmd.run:
-      - name: "cd /srv/Scripts/ds-exams/app && FLASK_APP=$PWD/app/http/api/endpoints.py FLASK_ENV=development pipenv run python -m flask run --port 4433"
+      - name: "cd /srv/Scripts/ds-exams/app && nohup FLASK_APP=$PWD/http/api/endpoints.py FLASK_ENV=development pipenv run python -m flask run --port 4433"

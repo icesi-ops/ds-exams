@@ -5,6 +5,8 @@ sudo yum update -y
 sudo yum install -y git 
 # Clone our repository
 sudo git clone --single-branch --branch IaC  https://github.com/SebastianUrbano/ds-exams.git
+cd /srv/Scripts && sudo git clone --single-branch --branch IaC  https://github.com/SebastianUrbano/ds-exams.git
+cd /home/vagrant
 #Install Python
 sudo yum install -y python3
 #Install pyenv and python2 por si las moscas :v
