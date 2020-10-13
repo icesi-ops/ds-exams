@@ -6,9 +6,9 @@ sudo yum install -y git
 # Clone our repository
 sudo git clone --single-branch --branch IaC  https://github.com/SebastianUrbano/ds-exams.git
 #Install Python
-yum install -y python3
+sudo yum install -y python3
 #Install pyenv and python2 por si las moscas :v
-yum install -y  gcc gcc-c++ make git patch openssl-devel zlib-devel readline-devel sqlite-devel bzip2-devel
+sudo yum install -y  gcc gcc-c++ make git patch openssl-devel zlib-devel readline-devel sqlite-devel bzip2-devel
 git clone git://github.com/yyuu/pyenv.git ~/.pyenv
 export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
@@ -18,7 +18,7 @@ eval "$(pyenv init -)"
 _PYENVCONF_
 pyenv install 2.7.10
 #Install Pip
-yum install python3-pip -y
+sudo yum install python3-pip -y
 #Install Node and NPM
 curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
 sudo yum install nodejs -y
@@ -34,4 +34,5 @@ sudo sh bootstrap_salt.sh
 sudo cp -r /srv/Scripts/ds-exams/ConfigurationManagment/minion.d /etc/salt/
 echo -e 'grains:\n roles:\n  - web' | sudo tee /etc/salt/minion.d/grains.conf
 # Doing provision with saltstack
-sudo salt-call state.apply
+# sudo salt-call state.apply
+# sudo salt-call --local state.apply -l debug
