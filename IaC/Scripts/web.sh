@@ -23,9 +23,11 @@ pyenv install 2.7.15
 sudo apt install python3-pip -y
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python get-pip.py
-sudo apt install python3-pip
+sudo apt install python3-pip -y
+sudo apt install python-pip -y
 #Install pip environment
 pip install pipenv
+pip3 install pipenv
 	#Hasta aqui instala pip y pipenv, para todos---------------
 #Install pip packages
 pipenv install flask==1.0.2
