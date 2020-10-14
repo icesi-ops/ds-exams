@@ -424,17 +424,17 @@ La primera dificultad encontrada por el equipo de desarrollo fue a la hora de ej
 
 Luego de empezar con el desarrollo el equipo notò que la capacidad de acción a la hora de compartir el codigo es muy baja, debido a que se debia saltar a muchas ramas, entonces, sobre la marcha el equipo planteó adoptar la estrategia GitHub Flow, en donde la principal rama es Master, y la rama secundiaria, donde está todo lo que se está desarrollando en el proyecto está en la rama IaC, creando una sub rama paralela de desarrollo, lo cual permitño un mejor manejo del código. Adicionalmente, se utlizó la rama Actividades del parcial para realizar esta documentación.
 
-###Dificultad con SaltStack
+### Dificultad con SaltStack
 
 A la hora de intentar el aprovisionamiento con SaltStack tuvimos muchos problemas debido a que no teniamos conocimientos en el uso de esta herramienta. Dado esto tuvimos las siguientes dificultades:
 
-- A la hora de aprovisionar los paquetes necesarios para nuestra aplicacion anteriormente descrita funcionara, entre esos, los paquetes Flask, Marshmallow. pipenv, entre otros
+- A la hora de aprovisionar los paquetes necesarios para nuestra aplicacion, como los paquetes Flask, Marshmallow. pipenv, entre otros
 
-- Para solucionar este probelma decidimos dejar de expresar estos paquetes en el lenguaje de SaltStack y aprovisionarlos a través de un script que es ejecutado desde el Vagrant file
+- Para solucionar este problema decidimos dejar de expresar estos paquetes en el lenguaje de SaltStack y aprovisionarlos a través de un script que es ejecutado desde el Vagrantfile
 
-###Dificultades en el aprovisionamiento del servidor web
+### Dificultades en el aprovisionamiento del servidor web
 
-Para aprovisionar y ejecutar el servidor web utilizamos el minion de SaltStack, despues de aprovisionar el Front y el Back, procediamos con el minion a ejecutar los comandos finales para garantizar que el Front y el Back corrieran en la instancia Web, a la hora de correr el comando se utilizò la instrucción de SaltStack:
+Para aprovisionar y ejecutar el servidor web utilizamos el minion de SaltStack, despues de aprovisionar el Front y el Back, se procedia a utilizar minion para ejecutar los comandos finales para garantizar que el Front y el Back corrieran en la instancia Web, a la hora de correr el comando se utilizó la instrucción de SaltStack:
 
 
 ```
@@ -456,7 +456,7 @@ El problema es que cada vez que la máquina ya aprovisionada corria el segundo c
 
 Para este problema no pudimos encontrar una solucion concreta (a veces funcionaba y a veces no)
 
-###Problemas con el mano de los Enviroments a la hora de correr las aplicaicones web
+### Problemas con el mano de los Enviroments a la hora de correr las aplicaicones web
 
 A la hora que querer correr el Flask, responsable de la ejecución del Back-End, obteniamos problemas debido a que el comando no encontraba el Enviroment correcto.
 
