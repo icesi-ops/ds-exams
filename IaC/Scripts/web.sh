@@ -18,7 +18,7 @@ cat << _PYENVCONF_ >> ~/.zshrc
 export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 _PYENVCONF_
-pyenv install 2.7.10
+pyenv install 2.7.15
 #Install Pip
 sudo yum install python3-pip -y
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py

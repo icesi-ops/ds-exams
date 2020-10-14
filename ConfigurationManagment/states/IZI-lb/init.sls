@@ -13,8 +13,8 @@ install_haproxy:
         
         backend nodes
             balance roundrobin
-            server web-1 192.168.33.11:4433 check
-            server web-2 192.168.33.12:4433 check
+            server web-1 192.168.33.11:8080 check
+            server web-2 192.168.33.12:8080 check
 
 run_haproxy:
   cmd.run:
