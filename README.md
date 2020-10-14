@@ -4,7 +4,7 @@
 ## IaC
 Ejecución de la infraestructura como código 
 
-**Instructions**
+**Instrucciones para el despliegue**
 
 Para ejecutar el despliegue de la infraestructura se deben seguir los siguientes comandos por consola, asegurando previamente que se cuente con VirtualBox, Git,  Vagrant y sus complemento vagrant plugin install vagrant-vbguest. Los comandos se presentan a continuación:
 
@@ -15,4 +15,4 @@ vagrant plugin install vagrant-vbguest
 vagrant up
 ```
 
-**Documentación para el aprovisionamiento del balanceador**
+**Documentación del aprovisionamiento del balanceador**
