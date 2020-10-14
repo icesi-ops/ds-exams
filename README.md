@@ -121,7 +121,7 @@ El resultado obtenido al ejecutar la infraestructura y el aprovisionamiento fue 
 **Documentación del aprovisionamiento de los servidores web**
 En el siguiente apartado, se mostrará entonces las configuraciones necesarias para llevar acabo la construccíón y ejecución del servidor web (posteriormente duplicado para usarse con el balanceador de carga). El despliegue de este servicio se realizará a través de una máquina virtual Ubuntu 18.04 de 512GB de RAM, 1 CP. Además del uso del framework React para realizar interfaces de web; Python para crear el REST-API, que tendrá el rol de back-end y Flask para comunicar el front-end con el back-end. Para ejecutar la operación de esta dos máquinas, se deben hacer los ajustes mostrados respectivamente:
     **Front-end**
-    Para es parte de la aplicación web, se debe proceder primero a crear un script, el cual se ejecutará dentro de la máquina virtual para instalar todos los paquetes necesarios (princpalmente de Node.js) que sirven para correr la interfaz web. El archivo en cuestión será llamado "web.sh", y tendrá los siguientes comandos:
+    Primero, para esta parte de la aplicación web, se debe proceder primero a crear un script, el cual se ejecutará dentro de la máquina virtual para instalar todos los paquetes necesarios (princpalmente de Node.js) que sirven para correr la interfaz web. El archivo en cuestión será llamado "web.sh", y tendrá los siguientes comandos:
 
 ```
 ##!/bin/bash
@@ -132,6 +132,26 @@ sudo apt install -y git
 # Clone our repository
 cd /home/vagrant/ && sudo git clone --single-branch --branch IaC  https://github.com/SebastianUrbano/ds-exams.git
 cd /home/vagrant
+#Install Node and NPM
+curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
+sudo apt install npm -y
+sudo apt install nodejs -y
+#Install React
+# curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+# sudo rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
+sudo apt install yarn -y
+##ojo con lo que falta de react########
+# Install SaltStack
+sudo curl -L https://bootstrap.saltstack.com -o bootstrap_salt.sh
+sudo sh bootstrap_salt.sh
+#Put custom minion config in place (for enabling masterless mode)
+sudo cp -r /home/vagrant/ds-exams/ConfigurationManagment/minion.d /etc/salt/
+echo -e 'grains:\n roles:\n  - web' | sudo tee /etc/salt/minion.d/grains.conf
+```
+ **Back-end**
+    Segundo, en esta parte de la aplicación web, se hace primero un script, que se ejecutará dentro de las máquinas virtuales para instalar todos los paquetes necesarios (principalmente de Python y Flask) que sirven para ejecutar el Back-end del aplicativo web, dentro del mismo llamado "web.sh", y tendrá los siguientes comandos:
+
+```
 #Install Python
 sudo apt install -y python3
 sudo apt install -y python2
@@ -159,25 +179,11 @@ pipenv install marshmallow==2.16.3
 pipenv install pyjwt==1.7.1
 pipenv install flask_cors==3.0.7
 sudo pipenv shell
-#Install Node and NPM
-curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
-sudo apt install npm -y
-sudo apt install nodejs -y
-#Install React
-# curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
-# sudo rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
-sudo apt install yarn -y
-##ojo con lo que falta de react########
-# Install SaltStack
-sudo curl -L https://bootstrap.saltstack.com -o bootstrap_salt.sh
-sudo sh bootstrap_salt.sh
-#Put custom minion config in place (for enabling masterless mode)
-sudo cp -r /home/vagrant/ds-exams/ConfigurationManagment/minion.d /etc/salt/
-echo -e 'grains:\n roles:\n  - web' | sudo tee /etc/salt/minion.d/grains.conf
 ```
 
-	Luego, se procede a configurar el archivo de Vagrant que realizará toda la configuración del aprovisionamiento de las máquinas virtuales Ubuntu. Además, se ajusta el aprovisionamiento con Saltstack para que comparta las carpetas con el contenido necesario para que las máquinas virtuales puedan implementar y ejecutar el back y front de la aplicacion; con el siguiente contenido:
+Luego, se procede a configurar el archivo de Vagrant que realizará toda la configuración del aprovisionamiento de las máquinas virtuales Ubuntu. Además, se ajusta el aprovisionamiento con Saltstack para que comparta las carpetas con el contenido necesario para que las máquinas virtuales puedan implementar y ejecutar el back y front de la aplicacion; con el siguiente contenido:
 	
+
 ```
 Vagrant.configure("2") do |config|
     config.ssh.insert_key = false
@@ -206,6 +212,10 @@ Vagrant.configure("2") do |config|
     end
    end
 ```
+
+	Finalmente, se procede a crear un archivo .sls, el cual es un State del Saltstack que, ayudará a ejecutar los servicios ya creados de la aplicación web para ponerla en funcionamiento e instalar otras dependencias de Node.js necesarias. 
+
+
 
 
 **Documentación del aprovisionamiento de la base de datos**
