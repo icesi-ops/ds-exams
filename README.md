@@ -77,7 +77,6 @@ Lo anterior, realiza un update para actualizar todos los archivos del sistema CE
 
 En este, se puede observar que primero aprovisiona por medio del shell el script inicial y por medio de saltstack el resto del sistema y sus configuraciones. El aprovisionamiento que realiza por medio de saltstack se presenta a continuación:
 
-
 ```
 install_haproxy:
   pkg.installed:
@@ -102,3 +101,4 @@ run_haproxy:
     - name: sudo systemctl restart haproxy
 
 ```
+El archivo sls de aprovisionamiento contiene primero la verificación de la instalación de haproxy, el indexado de la configuración necesaria para que el balanceador apunte a los hots disponibles y el inicio del servicio.
