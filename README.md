@@ -117,10 +117,96 @@ El archivo sls de aprovisionamiento contiene primero la verificación de la inst
 El resultado obtenido al ejecutar la infraestructura y el aprovisionamiento fue exitoso, como evidencia se presenta:
 
 
+
 **Documentación del aprovisionamiento de los servidores web**
 En el siguiente apartado, se mostrará entonces las configuraciones necesarias para llevar acabo la construccíón y ejecución del servidor web (posteriormente duplicado para usarse con el balanceador de carga). El despliegue de este servicio se realizará a través de una máquina virtual Ubuntu 18.04 de 512GB de RAM, 1 CP. Además del uso del framework React para realizar interfaces de web; Python para crear el REST-API, que tendrá el rol de back-end y Flask para comunicar el front-end con el back-end. Para ejecutar la operación de esta dos máquinas, se deben hacer los ajustes mostrados respectivamente:
     **Front-end**
-    Para es parte de la aplicación web, se debe proceder primero a crear un script, el cual se ejecutará dentro de la máquina virtual para instalar todos los paquetes necesarios (princpalmente de Node.js) que sirven para correr la interfaz web. El archivo en cuestión será llamado "web.sh"
+    Para es parte de la aplicación web, se debe proceder primero a crear un script, el cual se ejecutará dentro de la máquina virtual para instalar todos los paquetes necesarios (princpalmente de Node.js) que sirven para correr la interfaz web. El archivo en cuestión será llamado "web.sh", y tendrá los siguientes comandos:
+
+```
+##!/bin/bash
+#update
+sudo apt update -y
+#Install git
+sudo apt install -y git 
+# Clone our repository
+cd /home/vagrant/ && sudo git clone --single-branch --branch IaC  https://github.com/SebastianUrbano/ds-exams.git
+cd /home/vagrant
+#Install Python
+sudo apt install -y python3
+sudo apt install -y python2
+#Install pyenv and python2 por si las moscas :v
+sudo apt install -y  gcc gcc-c++ make git patch openssl-devel zlib-devel readline-devel sqlite-devel bzip2-devel
+git clone git://github.com/yyuu/pyenv.git ~/.pyenv
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+cat << PYENVCONF >> ~/.zshrc
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+PYENVCONF
+pyenv install 2.7.15
+#Install Pip
+sudo apt install python3-pip -y
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python get-pip.py
+sudo apt install python3-pip
+#Install pip environment
+pip install pipenv
+	#Hasta aqui instala pip y pipenv, para todos---------------
+#Install pip packages
+pipenv install flask==1.0.2
+pipenv install marshmallow==2.16.3
+pipenv install pyjwt==1.7.1
+pipenv install flask_cors==3.0.7
+sudo pipenv shell
+#Install Node and NPM
+curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
+sudo apt install npm -y
+sudo apt install nodejs -y
+#Install React
+# curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+# sudo rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
+sudo apt install yarn -y
+##ojo con lo que falta de react########
+# Install SaltStack
+sudo curl -L https://bootstrap.saltstack.com -o bootstrap_salt.sh
+sudo sh bootstrap_salt.sh
+#Put custom minion config in place (for enabling masterless mode)
+sudo cp -r /home/vagrant/ds-exams/ConfigurationManagment/minion.d /etc/salt/
+echo -e 'grains:\n roles:\n  - web' | sudo tee /etc/salt/minion.d/grains.conf
+```
+
+	Luego, se procede a configurar el archivo de Vagrant que realizará toda la configuración del aprovisionamiento de las máquinas virtuales Ubuntu. Además, se ajusta el aprovisionamiento con Saltstack para que comparta las carpetas con el contenido necesario para que las máquinas virtuales puedan implementar y ejecutar el back y front de la aplicacion; con el siguiente contenido:
+	
+```
+Vagrant.configure("2") do |config|
+    config.ssh.insert_key = false
+    (1..2).each do |i|
+     config.vm.define "web-#{i}" do |web|
+       web.vm.box = "ubuntu/bionic64"
+       web.vm.hostname = "web-#{i}"
+       web.vm.network "private_network", ip: "192.168.33.1#{i}"
+       web.vm.provider "virtualbox" do |vb|
+        vb.customize ["modifyvm", :id, "--memory", "512", "--cpus", "1", "--name", "web-#{i}"]
+       end
+      #  web.vm.provision "file", source: "./Scripts/web.sh", destination: "/srv/sc.sh"
+      
+      ####### File Share #######
+      web.vm.synced_folder '../ConfigurationManagment/states', '/srv/salt'
+      web.vm.synced_folder '../ConfigurationManagment/pillars', '/srv/pillar'  
+      web.vm.synced_folder './Scripts', '/srv/Scripts' 
+      ##### APROVISIONAR INICIAL DE LOS SERVIDORES #####  
+      web.vm.provision "shell", path: "./Scripts/web.sh"
+      ##### APROVISIONAMIENTO DE LOS SERVIDORES ##### 
+      web.vm.provision :salt do |salt|
+        salt.masterless = true
+        salt.run_highstate = true
+        salt.verbose = true
+      end
+    end
+   end
+```
+
 
 **Documentación del aprovisionamiento de la base de datos**
 
