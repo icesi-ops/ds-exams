@@ -32,7 +32,7 @@ vagrant up
 
 **Documentación del aprovisionamiento del balanceador**
 
-Con el fin de llevar a cabo el despliegue de un balanceador de cargas, se tomó la decisión de usar una maquina virtual de imagen centos/7 con 512MB de RAM, 1 CPU y de nombre lb, se compartieron por medio de vagrant desde la maquina que aprovisiona los archivos states, pillars y lb.sh que corresponde en orden al archivo del cuál asumirá un estado, el siguiente la ubicación de sus pilares y por ultimo un script ejecutable que corresponde a una configuración inicial. Los comandos se presentan a continuación:
+Con el fin de llevar a cabo el despliegue de un balanceador de cargas, se tomó la decisión de usar una maquina virtual con imagen centos/7 de 512MB de RAM, 1 CPU y de nombre lb, se compartieron por medio de vagrant desde la maquina que aprovisiona los archivos states, pillars y lb.sh que corresponde en orden al archivo del cuál asumirá un estado, el siguiente la ubicación de sus pilares y por ultimo un script ejecutable que corresponde a una configuración inicial. Los comandos se presentan a continuación:
 
 ```
 ##!/bin/bash
