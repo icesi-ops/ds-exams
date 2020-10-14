@@ -34,6 +34,7 @@ pip install pyjwt==1.7.1
 pip install flask_cors==3.0.7
 #Install Node and NPM
 curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
+sudo apt install npm -y
 sudo apt install nodejs -y
 #Install React
 # curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
