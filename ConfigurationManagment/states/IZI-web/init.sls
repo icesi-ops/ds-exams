@@ -8,4 +8,4 @@ run_front:
 
 run_back:
     cmd.run:
-      - name: "cd /srv/Scripts/ds-exams/app && nohup FLASK_APP=$PWD/http/api/endpoints.py FLASK_ENV=development pipenv run python -m flask run --port 4433 &"
+      - name: "cd /srv/Scripts/ds-exams/app && nohup FLASK_APP=$PWD/http/api/endpoints.py FLASK_ENV=development pipenv run python2 -m flask run --port 4433 &"
