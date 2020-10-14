@@ -32,7 +32,7 @@ vagrant up
 
 **Documentación del aprovisionamiento del balanceador**
 
-Con el fin de llevar a cabo el despliegue de un balanceador de cargas, se tomó la decisión de usar una maquina virtual de imagen centos/7 con 512MB de RAM, 1 CPU y de nombre lb, se compartieron por medio de vagrant desde la maquina que aprovisiona los archivos states, pillars y lb.sh que corresponde en orden al archivo del cuál asumirá un estado, el siguiente la ubicación de sus pilares y por ultimo un script ejecutable que corresponde a una configuración inicial
+Con el fin de llevar a cabo el despliegue de un balanceador de cargas, se tomó la decisión de usar una maquina virtual de imagen centos/7 con 512MB de RAM, 1 CPU y de nombre lb, se compartieron por medio de vagrant desde la maquina que aprovisiona los archivos states, pillars y lb.sh que corresponde en orden al archivo del cuál asumirá un estado, el siguiente la ubicación de sus pilares y por ultimo un script ejecutable que corresponde a una configuración inicial. Los comandos se presentan a continuación:
 
 ```
 ##!/bin/bash
@@ -50,3 +50,27 @@ sudo cp -r /srv/ds-exams/ConfigurationManagment/minion.d /etc/salt/
 echo -e 'grains:\n roles:\n  - lb' | sudo tee /etc/salt/minion.d/grains.conf
 # Doing provision with saltstack
 ```
+Lo anterior, realiza un update para actualizar todos los archivos del sistema CENTOS7, clona nuestro repositorio con el fin de obtener su configuración a aplicar, instala el servicio HAproxy e instala saltstack para posteriormente ser aplicado su estado desde el Vagrantfile. Este ultimo se muestra a continuación:
+
+```
+    config.vm.define "lb" do |lb|
+     lb.vm.box = "centos/7"
+     lb.vm.hostname = "lb"
+     lb.vm.network "private_network", ip: "192.168.33.200"
+     lb.vm.provider "virtualbox" do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "512", "--cpus", "1", "--name", "lb"]
+     end
+    ####### File Share #######
+    lb.vm.synced_folder '../ConfigurationManagment/states', '/srv/salt'
+    lb.vm.synced_folder '../ConfigurationManagment/pillars', '/srv/pillar'  
+    lb.vm.synced_folder './Scripts', '/srv/Scripts' 
+    ##### APROVISIONAR INICIAL DEL LB #####  
+    lb.vm.provision "shell", path: "./Scripts/lb.sh"
+    ##### APROVISIONAMIENTO DEL LB##### 
+    lb.vm.provision :salt do |salt|
+      salt.masterless = true
+      salt.run_highstate = true
+      salt.verbose = true
+    end
+  end
+ ```
