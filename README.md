@@ -32,7 +32,7 @@ vagrant up
 
 **Documentación del aprovisionamiento del balanceador**
 
-Con el fin de llevar a cabo el despliegue de un balanceador de cargas, se tomó la decisión de usar una maquina virtual con imagen centos/7 de 512MB de RAM, 1 CPU y de nombre lb, se compartieron por medio de vagrant desde la maquina que aprovisiona los archivos states, pillars y lb.sh que corresponde en orden al archivo del cuál asumirá un estado, el siguiente la ubicación de sus pilares y por ultimo un script ejecutable que corresponde a una configuración inicial. Los comandos se presentan a continuación:
+Con el fin de llevar a cabo el despliegue de un balanceador de cargas, se tomó la decisión de usar una maquina virtual con imagen centos/7 de 512MB de RAM, 1 CPU y de nombre lb, se compartieron por medio de vagrant desde la maquina que aprovisiona los archivos states, pillars y lb.sh que corresponde en orden al archivo del cuál asumirá un estado, el siguiente la ubicación de sus pilares y por ultimo un script ejecutable que corresponde a una configuración inicial. Los comandos de dicha configuración se presentan a continuación:
 
 ```
 ##!/bin/bash
@@ -50,7 +50,7 @@ sudo cp -r /srv/ds-exams/ConfigurationManagment/minion.d /etc/salt/
 echo -e 'grains:\n roles:\n  - lb' | sudo tee /etc/salt/minion.d/grains.conf
 # Doing provision with saltstack
 ```
-Lo anterior, realiza un update para actualizar todos los archivos del sistema CENTOS7, clona nuestro repositorio con el fin de obtener su configuración a aplicar, instala el servicio HAproxy e instala saltstack para posteriormente ser aplicado su estado desde el Vagrantfile. Este ultimo se muestra a continuación:
+Lo anterior, realiza un update para actualizar todos los archivos del sistema CENTOS7, clona el repositorio con el fin de obtener su configuración a aplicar, instala el servicio HAproxy e instala saltstack para posteriormente ser aplicado el aprovisionamiento de su estado, pasado por medio de un grain, desde el Vagrantfile. Este ultimo se muestra a continuación:
 
 ```
     config.vm.define "lb" do |lb|
@@ -74,3 +74,31 @@ Lo anterior, realiza un update para actualizar todos los archivos del sistema CE
     end
   end
  ```
+
+En este, se puede observar que primero aprovisiona por medio del shell el script inicial y por medio de saltstack el resto del sistema y sus configuraciones. El aprovisionamiento que realiza por medio de saltstack se presenta a continuación:
+
+
+```
+install_haproxy:
+  pkg.installed:
+    - pkgs:
+      - haproxy
+
+/etc/haproxy/haproxy.cfg:
+  file.append:
+    - text: |
+        
+        frontend main
+            bind *:8080
+            default_backend nodes
+        
+        backend nodes
+            balance roundrobin
+            server web-1 192.168.33.11:8080 check
+            server web-2 192.168.33.12:8080 check
+
+run_haproxy:
+  cmd.run:
+    - name: sudo systemctl restart haproxy
+
+```
