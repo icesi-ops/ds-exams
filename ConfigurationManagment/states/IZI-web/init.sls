@@ -4,7 +4,7 @@ install_front_npm_dependencies:
 
 run_front:
     cmd.run:
-      - name: "nohup node /srv/Scripts//ds-exams/app/http/app/src/Home/index.js > /dev/null 2>&1 &"
+      - name: "cd /srv/Scripts/ds-exams/app/http/app && nohup npm start > /dev/null 2>&1 &"
 
 run_back:
     cmd.run:
