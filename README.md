@@ -6,7 +6,7 @@
 
 **Jhan Carlos Diaz Vidal -----> A00310560**
 
-**Matea Matta Lopez -----> A00310540**
+**Mateo Matta Lopez -----> A00310540**
 
 ## Descripción general
 
@@ -107,8 +107,9 @@ El resultado obtenido al ejecutar la infraestructura y el aprovisionamiento fue 
 
 
 **Documentación del aprovisionamiento de los servidores web**
-
-
+En el siguiente apartado, se mostrará entonces las configuraciones necesarias para llevar acabo la construccíón y ejecución del servidor web (posteriormente duplicado para usarse con el balanceador de carga). El despliegue de este servicio se realizará a través de una máquina virtual Ubuntu 18.04 de 512GB de RAM, 1 CP. Además del uso del framework React para realizar interfaces de web; Python para crear el REST-API, que tendrá el rol de back-end y Flask para comunicar el front-end con el back-end. Para ejecutar la operación de esta dos máquinas, se deben hacer los ajustes mostrados respectivamente:
+    **Front-end**
+    Para es parte de la aplicación web, se debe proceder primero a crear un script, el cual se ejecutará dentro de la máquina virtual para instalar todos los paquetes necesarios (princpalmente de Node.js) que sirven para correr la interfaz web. El archivo en cuestión será llamado "web.sh"
 
 **Documentación del aprovisionamiento de la base de datos**
 
@@ -122,7 +123,7 @@ sudo yum install -y git
 sudo git clone https://github.com/SebastianUrbano/ds-exams.git
 #Install Python
 sudo yum install -y python3
-#Install pyenv and python2 por si las moscas :v
+#Install pyenv and python2 
 sudo yum install -y  gcc gcc-c++ make git patch openssl-devel zlib-devel readline-devel sqlite-devel bzip2-devel
 sudo yum install -y gcc python-devel
 git clone git://github.com/yyuu/pyenv.git ~/.pyenv
