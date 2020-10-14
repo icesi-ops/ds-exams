@@ -10,11 +10,24 @@
 
 ## Descripción general
 
-Aquí va la descripción de Carlitos
-WEB-1 192.168.33.11
-WEB-2 192.168.33.12
-LB 192.168.33.200
-DB 192.168.33.14
+    Para desarrollar lo requerido en el parcial el equipo decidió utilizar una guìa proporcionada por okta, una plataforma de desarrollo, esta aplicación consta de un Front-End, que se ejecuta en node.js, el Back-End, que se ejecuta con Flask y una base de datos de MongoDB. Esta aplicaciòn permite hacer una busquedad de repositorios de www.github.com, para poder realizar esta busquedad es necesario que el usuario primero se autentique frente a la aplicación con una cuenta de Okta.
+    
+    ```
+    Fuente:
+  
+    https://developer.okta.com/blog/2018/12/20/crud-app-with-python-flask-react
+    ```
+    
+   Luego de realizar diferentes adaptaciónes a la aplicación propuesta en el tutorial se procedió con la construcción de un vagrant file el cual contempla las siguientes máquinas con las siguientes direcciones y sistemas operativos:
+
+    ```
+   Web-1: Servidor web con front y back ejecutandose : 192.168.33.11  : Ubuntu 
+   Web-2: Servidor web con front y back ejecutandose : 192.168.33.12  : CentOS 7
+   Lb   : LoadBalancer conectado a Web-1 y Web-2     : 192.168.33.200 : CentOS 7
+   Db   : Base de datos con MongoDB ejecutandose     : 192.168.33.14  : CentOS 7
+
+    ```
+Para aprovisionar todas esta máquinas se utilizó SaltStack y un conjunto de Scripts, dependiendo de la máquina. Cabe resaltar que la herramienta que se utilizó para el despliegue automatico de las máquinas fue Vagrant junto con VirtualBox. En cuanto al aprovisionamiento con SaltStack, optamos por la opción masterless, debido la poca complejidad de la infraestructura a aprovisionar, tratando de ahorrar la mayor cantidad de recursos posibles
 
 ## IaC
 Ejecución de la infraestructura como código 
