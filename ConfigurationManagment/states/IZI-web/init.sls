@@ -1,6 +1,6 @@
 install_front_npm_dependencies:
-    npm.bootstrap:
-      - name: /home/vagrant/ds-exams/app/http/app
+    cmd.run:
+      - name: "cd /home/vagrant/ds-exams/app/http/app && npm install"
 
 run_front:
     cmd.run:
