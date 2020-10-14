@@ -1,6 +1,6 @@
 install_front_npm_dependencies:
     cmd.run:
-      - name: "cd /home/vagrant/ds-exams/app/http/app && npm install"
+      - name: "cd /home/vagrant/ds-exams/app/http/app && npm install -y"
 
 run_front:
     cmd.run:
