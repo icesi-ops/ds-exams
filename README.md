@@ -10,6 +10,11 @@
 
 ## Descripción general
 
+Aquí va la descripción de Carlitos
+WEB-1 192.168.33.11
+WEB-2 192.168.33.12
+LB 192.168.33.200
+DB 192.168.33.14
 
 ## IaC
 Ejecución de la infraestructura como código 
