@@ -6,11 +6,7 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure("2") do |config|
-<<<<<<< HEAD
   ##LB
-=======
-    config.ssh.insert_key = false
->>>>>>> 028c799dba272b4138a0bfbfe5f6a1bfbf0f57cc
     config.vm.define "lb" do |lb|
      lb.vm.box = "centos/7"
      lb.vm.hostname = "lb"
@@ -53,7 +49,6 @@ Vagrant.configure("2") do |config|
     end
     db.vm.provision "shell", inline: "echo Iam DB server"
    end
-<<<<<<< HEAD
    config.ssh.insert_key = false
    (1..2).each do |i|
     config.vm.define "web-#{i}" do |web|
@@ -79,31 +74,4 @@ Vagrant.configure("2") do |config|
      end
    end
   end
-=======
-
- (1..2).each do |i|
-     config.vm.define "web-#{i}" do |web|
-       web.vm.box = "ubuntu/bionic64"
-       web.vm.hostname = "web-#{i}"
-       web.vm.network "private_network", ip: "192.168.33.1#{i}"
-       web.vm.provider "virtualbox" do |vb|
-        vb.customize ["modifyvm", :id, "--memory", "1024", "--cpus", "2", "--name", "web-#{i}"]
-       end
-      #  web.vm.provision "file", source: "./Scripts/web.sh", destination: "/srv/sc.sh"
-      
-      ####### File Share #######
-      web.vm.synced_folder '../ConfigurationManagment/states', '/srv/salt'
-      web.vm.synced_folder '../ConfigurationManagment/pillars', '/srv/pillar'  
-      web.vm.synced_folder './Scripts', '/srv/Scripts' 
-      ##### APROVISIONAR INICIAL DE LOS SERVIDORES #####  
-      web.vm.provision "shell", path: "./Scripts/web.sh"
-      ##### APROVISIONAMIENTO DE LOS SERVIDORES ##### 
-      web.vm.provision :salt do |salt|
-        salt.masterless = true
-        salt.run_highstate = true
-        salt.verbose = true
-      end
-    end
-   end
->>>>>>> 028c799dba272b4138a0bfbfe5f6a1bfbf0f57cc
 end
