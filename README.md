@@ -102,3 +102,21 @@ run_haproxy:
 
 ```
 El archivo sls de aprovisionamiento contiene primero la verificación de la instalación de haproxy, el indexado de la configuración necesaria para que el balanceador apunte a los hots disponibles y el inicio del servicio.
+
+El resultado obtenido al ejecutar la infraestructura y el aprovisionamiento fue exitoso, como evidencia se presenta:
+
+
+**Documentación del aprovisionamiento de los servidores web**
+
+
+
+**Documentación del aprovisionamiento de la base de datos**
+
+
+
+**Documentación de las tareas de integración**
+
+
+
+**Documentación de problemas encontrados**
+
