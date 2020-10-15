@@ -19,7 +19,7 @@ Https://developer.okta.com/blog/2018/12/20/crud-app-with-python-flask-react
 Luego de realizar diferentes adaptaciónes a la aplicación propuesta en el tutorial se procedió con la construcción de un vagrant file el cual contempla las siguientes máquinas con las siguientes direcciones y sistemas operativos:
 
 ```
-   Web-1: Servidor web con front y back ejecutandose : 192.168.33.11  : Ubuntu 
+   Web-1: Servidor web con front y back ejecutandose : 192.168.33.11  : Ubuntu 18.04 
    Web-2: Servidor web con front y back ejecutandose : 192.168.33.12  : CentOS 7
    Lb   : LoadBalancer conectado a Web-1 y Web-2     : 192.168.33.200 : CentOS 7
    Db   : Base de datos con MongoDB ejecutandose     : 192.168.33.14  : CentOS 7
@@ -119,6 +119,7 @@ El resultado obtenido al ejecutar la infraestructura y el aprovisionamiento fue 
 
 
 **Documentación del aprovisionamiento de los servidores web**
+
 En el siguiente apartado, se mostrará entonces las configuraciones necesarias para llevar acabo la construccíón y ejecución del servidor web (posteriormente duplicado para usarse con el balanceador de carga). El despliegue de este servicio se realizará a través de una máquina virtual Ubuntu 18.04 de 512GB de RAM, 1 CP. Además del uso del framework React para realizar interfaces de web; Python para crear el REST-API, que tendrá el rol de back-end y Flask para comunicar el front-end con el back-end. Para ejecutar la operación de esta dos máquinas, se deben hacer los ajustes mostrados respectivamente:
     **Front-end**
     Primero, para esta parte de la aplicación web, se debe proceder primero a crear un script, el cual se ejecutará dentro de la máquina virtual para instalar todos los paquetes necesarios (princpalmente de Node.js) que sirven para correr la interfaz web. El archivo en cuestión será llamado "web.sh", y tendrá los siguientes comandos:
@@ -406,11 +407,12 @@ rs.initiate({
 
 El resultado obtenido al ejecutar la infraestructura y el aprovisionamiento fue exitoso, como evidencia se presenta:
 
-**Documentación de las tareas de integración**
+### Documentación de las tareas de integración
+
+La estrategia de integración utilizada por el equipo para desarrollar este proyecto fue GitHub Flow, la cual consiste en tener una rama principal, normalmente llamada master, de esta rama se deriba una secundiara la cual es sobre la que se realiza el desarollo, cuando el desarrollo culmina, esta rama (la que es IaC en nuestro proyecto) se mezcla con Master.
 
 
-
-**Documentación de problemas encontrados**
+### Documentación de problemas encontrados
 
 
 La primera dificultad encontrada por el equipo de desarrollo fue a la hora de ejecutar la estrategìa de branchin propuesta inicialmente, donde se tenia la idea de aplicar la estrategia Git Flow, donde se  buscaba tener una rama para cada parte funcional del proyecto, dejando como resultado las siguientes ramas:
@@ -468,6 +470,3 @@ run_back:
 
 
  este problema existia a la hora de ejecutarlo con SaltStack, pero cuando se ejecutaba el comando adentro de la maquina como el SaltStack deberia ejecutarlo corria correctamente la instancia Back-End
-
-
-
