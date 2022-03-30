@@ -1,3 +1,19 @@
+# Getting started
+
+Prerequisites:
+
+* NPM and NodeJS
+
+## Development 
+
+Check that vue-cli is installed globally:
+
+~~~bash
+npm i -g @vue/cli
+cd frontend 
+npm run serve
+~~~
+# Exam statement 
 ### Examen 1
 **Universidad ICESI**  
 **Curso:** Sistemas Distribuidos  
@@ -57,5 +73,10 @@ Si necesitas poner este servicio en producción, ¿qué crees que puede faltar? 
 Mayami me lo confirmó  
 De los deseos
 
+# Authors
 
+Sebastián García
 
+Javier Torres 
+
+Christian Gallo 
