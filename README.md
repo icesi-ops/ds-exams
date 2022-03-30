@@ -4,15 +4,55 @@ Prerequisites:
 
 * NPM and NodeJS
 
-## Development 
-
-Check that vue-cli is installed globally:
+# Get started
 
 ~~~bash
-npm i -g @vue/cli
+# Create storage folder 
+mkdir storage
+docker network create sd-p1
+
+cd frontend
+docker build -t sd-p1-frontend .
+
+cd backend 
+docker build -t sd-p1-backend .
+
+cd ..
+
+docker run \
+      --name sd-p1-frontend \
+      --network sd-p1\
+      -p 8080:8080\
+      -d\
+      sd-p1-frontend
+
+docker run \
+      --name sd-p1-backend \
+      --network sd-p1 \
+      -p 5000:5000 \
+      -v ${PWD}/storage:/app/storage \
+      -d\
+      sd-p1-backend
+~~~
+
+## Development 
+### Frontend 
+
+~~~bash
+# Check that vue-cli is installed globally:
+npm i -g @vue/cli 
 cd frontend 
+npm install
 npm run serve
 ~~~
+### Backend
+
+~~~bash
+cd backend
+npm install
+npm start
+~~~
+
 # Exam statement 
 ### Examen 1
 **Universidad ICESI**  

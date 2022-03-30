@@ -7,10 +7,7 @@ const app = express();
 
 app.use(cors());
 
-UPLOAD_PATH = process.env.HOME + '/ds-parcial-1-storage'; 
-
-console.log("Creating directory " + UPLOAD_PATH);
-fs.mkdirSync(UPLOAD_PATH, { recursive: true })
+UPLOAD_PATH = "storage"; 
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
