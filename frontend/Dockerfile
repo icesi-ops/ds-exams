@@ -3,6 +3,9 @@ FROM node:lts-alpine
 # Install a simple http server to serve static content
 RUN npm install -g http-server
 
+# Install consul
+RUN apk add consul
+
 # hacer la carpeta 'app' el directorio de trabajo actual
 WORKDIR /app
 
@@ -17,6 +20,9 @@ COPY . .
 
 # construir aplicación para producción minificada
 RUN npm run build
+
+# Launch consul agent
+RUN consul agent -config-file=consul.json
 
 EXPOSE 8080
 

@@ -9,9 +9,6 @@ COPY package*.json ./
 # instalar dependencias del proyecto
 RUN npm install
 
-# instalar dependencias del proyecto
-RUN npm install nodemon
-
 # copiar los archivos y carpetas del proyecto al directorio de trabajo actual (es decir, la carpeta 'app')
 COPY . .
 

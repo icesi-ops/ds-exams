@@ -19,6 +19,17 @@ docker build -t sd-p1-backend .
 
 cd ..
 
+# Consul
+docker run \
+      -p 8500:8500 \
+      -p 8600:8600/udp \
+      -d \
+      --network sd-p1\
+      --hostname consul-server\
+      --name consul \
+      consul:latest \
+      agent -server -bootstrap-expect 1 -ui -data-dir /tmp -client=0.0.0.0
+
 docker run \
       --name sd-p1-frontend \
       --network sd-p1\
@@ -33,6 +44,16 @@ docker run \
       -v ${PWD}/storage:/app/storage \
       -d\
       sd-p1-backend
+
+docker run \
+      --name samba\
+      --hostname samba\
+      --network sd-p1 \
+      -p 139:139\
+      -p 445:445 \
+      -v ${PWD}/storage:/mount \
+      -d \
+      dperson/samba -p
 ~~~
 
 ## Development 
