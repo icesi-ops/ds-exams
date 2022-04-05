@@ -1,20 +1,20 @@
 {
-  "node_name": "consul-client",
+  "node_name": "consul-frontend-client",
   "server": false,
   "datacenter": "dc1",
   "data_dir": "consul/data",
   "log_level": "INFO",
   "retry_join": ["consul-server"],
   "service": {
-    "id": "dns",
-    "name": "dns",
+    "id": "http-server",
+    "name": "http-server",
     "tags": ["primary"],
     "address": "localhost",
-    "port": 8600,
+    "port": 8080,
     "check": {
-      "id": "dns",
-      "name": "Consul DNS TCP on port 8600",
-      "tcp": "localhost:8600",
+      "id": "http-server",
+      "name": "Frontend on port 8080",
+      "tcp": "localhost:8080",
       "interval": "10s",
       "timeout": "1s"
     }

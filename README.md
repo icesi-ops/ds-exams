@@ -9,15 +9,17 @@ Prerequisites:
 ~~~bash
 # Create storage folder 
 mkdir storage
+sudo chmod 0777 ./storage
 docker network create sd-p1
 
 cd frontend
-docker build -t sd-p1-frontend .
+docker build -t sd-p1-frontend . && cd ..
 
 cd backend 
-docker build -t sd-p1-backend .
+docker build -t sd-p1-backend . && cd ..
 
-cd ..
+cd haproxy
+docker build -t sd-p1-loadbalancer . && cd ..
 
 # Consul
 docker run \
@@ -26,7 +28,7 @@ docker run \
       -d \
       --network sd-p1\
       --hostname consul-server\
-      --name consul \
+      --name frontend-consul \
       consul:latest \
       agent -server -bootstrap-expect 1 -ui -data-dir /tmp -client=0.0.0.0
 
@@ -54,6 +56,16 @@ docker run \
       -v ${PWD}/storage:/mount \
       -d \
       dperson/samba -p
+
+# Register frontend service in the consul server
+docker exec -it sd-p1-frontend consul agent -config-file=consul.json
+
+docker run  -p 80:8080\
+            -p 1936:1936 \
+            --network sd-p1 \
+            --name loadbalancer \
+            -d \
+            loadbalancer
 ~~~
 
 ## Development 
