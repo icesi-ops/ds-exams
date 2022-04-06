@@ -1,0 +1,15 @@
+{
+  "name": "list",
+  "version": "1.0.0",
+  "description": "list of uploaded files",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "DanielVillota16",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
