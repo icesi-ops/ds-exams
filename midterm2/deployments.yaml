@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-deployment
+  labels:
+    app: config-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-app
+  template:
+    metadata:
+      labels:
+        app: config-app
+    spec:
+      containers:
+      - name: config-app
+        image: sebasgarciamo/app-config
+        ports:
+        - containerPort: 8888
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-deployment
+  labels:
+    app: kafka-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-app
+  template:
+    metadata:
+      labels:
+        app: kafka-app
+    spec:
+      containers:
+      - name: kafka-app
+        image: johnnypark/kafka-zookeeper
+        ports:
+        - containerPort: 9092
+          name: "idk"
+        - containerPort: 2181
+          name: "idk2"
+        env:
+          - name: ADVERTISED_HOST
+            value: ${KAFKA-SERVICE_SERVICE_HOST}
+          - name: NUM_PARTITIONS
+            value: "3"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pay-deployment
+  labels:
+    app: pay-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pay-app
+  template:
+    metadata:
+      labels:
+        app: pay-app
+    spec:
+      containers:
+      - name: pay-app
+        image: sebasgarciamo/app-pay:2
+        ports:
+        - containerPort: 8010
+      - name: pay-db
+        image: gallo9923/app-pay-mysql
+        ports:
+        - containerPort: 3306
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: invoice-deployment
+  labels:
+    app: invoice-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: invoice-app
+  template:
+    metadata:
+      labels:
+        app: invoice-app
+    spec:
+      containers:
+      - name: invoice-app
+        image: sebasgarciamo/app-invoice
+        ports:
+        - containerPort: 8006
+      - name: invoice-db
+        image: gallo9923/app-invoice-postgres
+        ports:
+        - containerPort: 5432
