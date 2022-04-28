@@ -1,4 +1,4 @@
 ---
 kubectl create -f ./namespace.yaml
-kuibectl create -f ./deployments.yaml
+kuibectl create -f ./solutiongit .yaml
 ---
