@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: invoice-deployment
+  labels:
+    app: app-invoice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-invoice
+  template:
+    metadata:
+      labels:
+        app: app-invoice
+    spec:
+      containers:
+      - name: app-invoice
+        image: nelsonq2424/app-invoice
+        ports:
+        - containerPort: 8006

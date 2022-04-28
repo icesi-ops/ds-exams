@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: invoice-db
+  labels:
+    app: invoice-db
+spec:
+  # modify replicas according to your case
+  replicas: 2
+  selector:
+    matchLabels:
+      app: invoice-db
+  template:
+    metadata:
+      labels:
+        app: invoice-db
+    spec:
+      containers:
+      - name: invoice-db
+        image: nelsonq2424/app-postgress
+        ports:
+        - containerPort: 5432
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+ name: invoice-db-service
+ labels:
+  app: invoice-db
+spec:
+ type: ClusterIP
+ selector:
+  app: invoice-db
+ ports:
+  - protocol: TCP
+    port: 5432
+    targetPort: 5432
+    name: http
