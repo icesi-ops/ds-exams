@@ -127,7 +127,7 @@ spec:
           name: "idk2"
         env:
           - name: ADVERTISED_HOST
-            value: ${KAFKA-SERVICE_SERVICE_HOST}
+            value: "${KAFKA-SERVICE_SERVICE_HOST}"
           - name: NUM_PARTITIONS
             value: "3"
 ---
