@@ -1,7 +1,7 @@
 # Kubernetes
 
 Change .properties of [config files ](./config/) to point to env variables containing IP adresses determined by Kubernetes.
-
+Change DB password in [app pay properties](./config/app-pay-dev.properties) to match MYSQL DB password expected in [docker image built from here](./resources/mysql/Dockerfile/) 
 ## Push built images to dockerhub
 
 Build docker files for each microservices with special tags
