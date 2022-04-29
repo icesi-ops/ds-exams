@@ -2,8 +2,41 @@
 
 Change .properties of [config files ](./config/) to point to env variables containing IP adresses determined by Kubernetes.
 
+## Push built images to dockerhub
 
+Build docker files for each microservices with special tags
 
+```bash
+cd ds-exams/midterm2
+
+cd app-config 
+docker build -t sebasgarciamo/app-config:mt-2 .
+docker push sebasgarciamo/app-config:mt-2 
+cd ..
+
+# Create docker images for databases
+cd resources
+
+cd mysql
+docker build -t sebasgarciamo/mysql-app-pay:mt-2 .
+docker push sebasgarciamo/mysql-app-pay:mt-2 
+cd ..
+
+cd postgres
+docker build -t sebasgarciamo/postgres-app-invoice:mt-2 .
+docker push sebasgarciamo/postgres-app-invoice:mt-2 
+cd ..
+
+cd ..
+```
+
+## Create Kubernetes pods 
+
+```
+# Create namespace
+kubectl create -f kubernetes/solution.yaml
+kubectl get pods --watch
+```
 
 # Microservicios con Spring Boot
 

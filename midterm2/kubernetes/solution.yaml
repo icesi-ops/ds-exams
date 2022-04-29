@@ -41,7 +41,7 @@ spec:
     spec:
       containers:
       - name: config-app
-        image: sebasgarciamo/app-config
+        image: sebasgarciamo/app-config:mt-2
         ports:
         - containerPort: 8888
 ---
@@ -75,7 +75,7 @@ spec:
     spec:
       containers:
       - name: pay-bd
-        image: gallo9923/app-pay-mysql
+        image: sebasgarciamo/mysql-app-pay:mt-2
         ports:
         - containerPort: 3306
 ---
@@ -126,8 +126,6 @@ spec:
         - containerPort: 2181
           name: "idk2"
         env:
-          - name: ADVERTISED_HOST
-            value: "${KAFKA-SERVICE_SERVICE_HOST}"
           - name: NUM_PARTITIONS
             value: "3"
 ---
