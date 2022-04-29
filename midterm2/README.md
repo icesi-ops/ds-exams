@@ -1,7 +1,22 @@
 # Kubernetes
 
-Change .properties of [config files ](./config/) to point to env variables containing IP adresses determined by Kubernetes.
-Change DB password in [app pay properties](./config/app-pay-dev.properties) to match MYSQL DB password expected in [docker image built from here](./resources/mysql/Dockerfile/) 
+# Configuration changes 
+
+Firstly, I had to change the [bootstrap.properties](./app-pay/src/main/resources/bootstrap.properties) file of each microservice in order to make them point to the IP and port of the config server given by Kubernetes.
+
+Change from 
+```
+spring.cloud.config.uri=http://app-config:8888
+```
+to
+```
+spring.cloud.config.uri=http://${CONFIG_CLUSTERIP_SERVICE_SERVICE_HOST}:${CONFIG_CLUSTERIP_SERVICE_SERVICE_PORT}
+```
+
+Secondly, I had to fix MySQL database authentication. I changed the DB password in [app pay properties](./config/app-pay-dev.properties) to match MYSQL DB password expected in [docker image built from here](./resources/mysql/Dockerfile/) 
+
+Then, for each microservice, I had to change .properties of [config files ](./config/) to point to env variables containing IP adresses determined by Kubernetes.
+
 ## Push built images to dockerhub
 
 Build docker files for each microservices with special tags
@@ -34,7 +49,18 @@ cd ..
 
 ```
 # Create namespace
-kubectl create -f kubernetes/solution.yaml
+
+kubectl create -f kubernetes/deployments/config.yaml
+
+kubectl create -f kubernetes/deployments/kafka.yaml
+
+kubectl create -f kubernetes/deployments/mysql_pay.yaml
+
+# Once the mysql database is running and waiting for connection, run pay. 
+# This is done in order to avoid timeout errors. Otherwise, the pay microservice
+# may restarts until the database is ready for connections.
+kubectl create -f kubernetes/deployments/pay.yaml
+
 kubectl get pods --watch
 ```
 
