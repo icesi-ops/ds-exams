@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: pay-app
-        image: sebasgarciamo/app-pay:mt-2
+        image: sebasgarciamo/app-pay:2
         ports:
         - containerPort: 8010

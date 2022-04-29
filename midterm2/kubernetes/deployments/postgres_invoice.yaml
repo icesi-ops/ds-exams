@@ -29,6 +29,6 @@ spec:
     spec:
       containers:
       - name: invoice-bd
-        image: sebasgarciamo/postgress-app-invoice
+        image: sebasgarciamo/app-invoice-postgres
         ports:
         - containerPort: 5432

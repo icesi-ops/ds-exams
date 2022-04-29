@@ -120,6 +120,19 @@ kubectl create -f kubernetes/deployments/postgres_invoice.yaml
 ```bash
 kubectl create -f kubernetes/deployments/invoice.yaml
 ```
+### Transaction
+
+#### Transaction DB
+
+```bash
+kubectl create -f kubernetes/deployments/mongodb_transaction.yaml
+```
+#### Invoice microservice
+
+
+```bash
+kubectl create -f kubernetes/deployments/transaction.yaml
+```
 
 
 ```bash
