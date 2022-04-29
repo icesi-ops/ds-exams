@@ -28,6 +28,21 @@ docker build -t sebasgarciamo/app-config:mt-2 .
 docker push sebasgarciamo/app-config:mt-2 
 cd ..
 
+cd app-pay 
+docker build -t sebasgarciamo/app-pay:mt-2 .
+docker push sebasgarciamo/app-pay:mt-2 
+cd ..
+
+cd app-invoice
+docker build -t sebasgarciamo/app-invoice:mt-2 .
+docker push sebasgarciamo/app-invoice:mt-2 
+cd ..
+
+cd app-transaction
+docker build -t sebasgarciamo/app-transaction:mt-2 .
+docker push sebasgarciamo/app-transaction:mt-2 
+cd ..
+
 # Create docker images for databases
 cd resources
 
@@ -59,6 +74,10 @@ Once you execute this, you should see expect this in Kafka pod logs. It is mount
 
 ![Kafka ready](./evidences/steps/step_5_kafka_ready.png)
 
+### Pay
+
+#### MySQL DB
+
 ```bash
 kubectl create -f kubernetes/deployments/mysql_pay.yaml
 ```
@@ -66,6 +85,8 @@ kubectl create -f kubernetes/deployments/mysql_pay.yaml
 Once you execute this, you should see expect this in MySQL pay DB pod logs. It is creating the database in which the pay miroservice will save payment operations and then listens for connections.
 
 ![MySQL starting](./evidences/steps/step_3_mysql_pay_starting.png)
+
+#### Pay microservice
 
 ```bash
 # Once the mysql database is running and waiting for connection, run pay. 
@@ -85,6 +106,20 @@ Then, it will start the connection to the database microservice available at the
 After pay has established connection to the DB, it will connect to the Kafka microservice:
 
 ![Pay connecting to DB](./evidences/steps/step_5_pay_kafka_connection_ready.png)
+
+### Invoice
+
+#### Postgres DB
+
+```bash
+kubectl create -f kubernetes/deployments/postgres_invoice.yaml
+```
+#### Invoice microservice
+
+
+```bash
+kubectl create -f kubernetes/deployments/invoice.yaml
+```
 
 
 ```bash
