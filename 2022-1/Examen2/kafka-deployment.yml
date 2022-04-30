@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kafka-deployment
+  namespace: parcial2
   labels:
     app: kafka-app
 spec:
@@ -32,6 +33,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: kafka-service
+  namespace: parcial2
 spec:
   selector:
    app: kafka-app

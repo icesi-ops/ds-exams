@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app-config-deploy
+  namespace: parcial2
   labels:
    app: app-config
 spec:
@@ -11,7 +12,7 @@ spec:
     rollingUpdate:
       maxSurge: 3
       maxUnavailable: 2
-  replicas: 2 #Debe cambiar esto a 6 pero mientras hago las pruebas está bien
+  replicas: 2 #Se que deberián ser 6 pero me traba el pc
   selector:
     matchLabels:
          app: app-config
@@ -29,7 +30,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
- name: app-config-service-cluster
+ name: app-config-service
+ namespace: parcial2
  labels:
   app: app-config
 spec:
@@ -45,6 +47,7 @@ apiVersion: v1
 kind: Service
 metadata:
  name: app-config-service-nodeport
+ namespace: parcial2
  labels:
   app: app-config
 spec:
