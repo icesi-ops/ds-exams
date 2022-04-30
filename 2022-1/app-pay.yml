@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-pay
+  namespace: midterm2
+  labels:
+    app: app-pay
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: app-pay
+  template:
+    metadata:
+      namespace: midterm2
+      labels:
+        app: app-pay
+    spec:
+      containers:
+      - name: app-pay
+        image: apppay:0.1.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8010
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: midterm2
+  name: app-pay
+  labels:
+    app: app-pay
+spec:
+  type: LoadBalancer
+  selector:
+    app: app-pay
+  ports:
+    - protocol: TCP
+      port: 8010
+      targetPort: 8010
+      name: idk

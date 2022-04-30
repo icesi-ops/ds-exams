@@ -1,7 +1,9 @@
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kafka-deployment
+  namespace: midterm2
   labels:
     app: kafka-app
 spec:
@@ -11,6 +13,7 @@ spec:
       app: kafka-app
   template:
     metadata:
+      namespace: midterm2
       labels:
         app: kafka-app
     spec:
@@ -24,13 +27,16 @@ spec:
           name: "idk2"
         env:
           - name: ADVERTISED_HOST
-            value: ${KAFKA-SERVICE_SERVICE_HOST}
+            value: $(KAFKA_SERVICE_SERVICE_HOST)
           - name: NUM_PARTITIONS
-            value: 3
+            value: "3"
+
 ---
+
 kind: Service
 apiVersion: v1
 metadata:
+  namespace: midterm2
   name: kafka-service
 spec:
   selector:

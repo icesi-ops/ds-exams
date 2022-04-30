@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-config
+  namespace: midterm2
+  labels:
+    app: app-config
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: app-config
+  template:
+    metadata:
+      namespace: midterm2
+      labels:
+        app: app-config
+    spec:
+      containers:
+      - name: app-config
+        image: appconfig:0.1.0
+        ports:
+        - containerPort: 8888
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 2
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: midterm2
+  name: app-config
+  labels:
+    app: app-config
+spec:
+  type: NodePort
+  selector:
+    app: app-config
+  ports:
+    - protocol: TCP
+      port: 8888
+      targetPort: 8888
+      name: idk
