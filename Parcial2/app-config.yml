@@ -1,0 +1,46 @@
+#Deployment YAML definition
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-config
+  namespace: exam2
+  labels:
+    app: app-config
+spec:
+  replicas: 6
+  minReadySeconds: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 2
+  selector:
+    matchLabels:
+      app: app-config
+  template:
+    metadata:
+      labels:
+        app: app-config
+    spec:
+      containers:
+      - name: app-config
+        image: stigma137/app-config:latest
+        imagePullPolicy: "IfNotPresent"
+        ports:
+        - containerPort: 8888
+---
+# Service YAML definition
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-config
+  labels:
+    app: app-config
+  namespace: exam2
+spec:
+  selector:
+    app: app-config
+  type: NodePort
+  ports:
+    - port: 8888
+      targetPort: 8888

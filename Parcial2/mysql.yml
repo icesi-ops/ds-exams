@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: pay-db-replicaset
+  labels:
+    app: pay-db
+spec:
+  # modify replicas according to your case
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pay-db
+  template:
+    metadata:
+      labels:
+        app: pay-db
+    spec:
+      containers:
+      - name: pay-db
+        image: nelsonq2424/app-mysql
+        ports:
+        - containerPort: 3306
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+ name: pay-db-service
+ labels:
+  app: pay-db
+spec:
+ type: ClusterIP
+ selector:
+  app: pay-db
+ ports:
+  - protocol: TCP
+    port: 3306
+    targetPort: 3306
