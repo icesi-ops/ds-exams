@@ -2,6 +2,8 @@
 
 # Configuration changes 
 
+In order to prevent config server from trying to connect to Consul service discovery, I deleted those dependencies from []()
+
 Firstly, I had to change the [bootstrap.properties](./app-pay/src/main/resources/bootstrap.properties) file of each microservice in order to make them point to the IP and port of the config server given by Kubernetes.
 
 Change from 
@@ -13,7 +15,7 @@ to
 spring.cloud.config.uri=http://${CONFIG_CLUSTERIP_SERVICE_SERVICE_HOST}:${CONFIG_CLUSTERIP_SERVICE_SERVICE_PORT}
 ```
 
-Secondly, I had to fix MySQL database authentication. I changed the DB password in [app pay properties](./config/app-pay-dev.properties) to match MYSQL DB password expected in [docker image built from here](./resources/mysql/Dockerfile/) 
+Secondly, I had to fix MySQL database authentication. I changed the DB password in [app pay properties](./config/app-pay-dev.properties) to match MYSQL DB password expected in [docker image built from here](./resources/mysql/Dockerfile/)
 
 Then, for each microservice, I had to change .properties of [config files ](./config/) to point to env variables containing IP adresses determined by Kubernetes.
 ## Push built images to dockerhub
@@ -59,7 +61,7 @@ cd ..
 cd ..
 ```
 
-## Create Kubernetes pods 
+## Step by step solution
 
 ```bash
 kubectl create -f kubernetes/deployments/config.yaml
@@ -105,7 +107,7 @@ Then, it will start the connection to the database microservice available at the
 
 After pay has established connection to the DB, it will connect to the Kafka microservice:
 
-![Pay connecting to DB](./evidences/steps/step_5_pay_kafka_connection_ready.png)
+![Pay connecting to Kafka](./evidences/steps/step_5_pay_kafka_connection_ready.png)
 
 ### Invoice
 
@@ -114,35 +116,99 @@ After pay has established connection to the DB, it will connect to the Kafka mic
 ```bash
 kubectl create -f kubernetes/deployments/postgres_invoice.yaml
 ```
-#### Invoice microservice
 
+![Postgres DB ready](./evidences/steps/step_6_postgres_start.png)
+
+Once the postgres DB is ready and listening for connections, we can start the invoice microservice.
+#### Invoice microservice
 
 ```bash
 kubectl create -f kubernetes/deployments/invoice.yaml
 ```
+
+First, it fetches the configuration from config:
+![Invoice config](./evidences/steps/step_7_invoice_config.png)
+
+Then, is is able to connect to the database:
+![Invoice Postgres](./evidences/steps/step_7.1_invoice_postgres.png)
+
+Finally, it starts to listen to kafka in order to consume messages
+![Invoice kafka](./evidences/steps/step_7.2_invoice_kafka.png)
+
 ### Transaction
 
 #### Transaction DB
 
+First, we setup the database:
+
 ```bash
 kubectl create -f kubernetes/deployments/mongodb_transaction.yaml
 ```
-#### Invoice microservice
 
+#### Transaction microservice
+
+Once we have verified that the database is listening for connections, we can launch the transaction microservice:
 
 ```bash
 kubectl create -f kubernetes/deployments/transaction.yaml
 ```
 
+First, it is able to fetch the configuration from the config server.
 
-```bash
-kubectl get pods --watch
-```
+![Transaction config](./evidences/steps/step_8_transaction_config.png)
 
-### Step 1: Start config
+Then, it starts the connection to the database successfully:
 
-[](./evidences/steps/step_1_config_starting.png)
+![Mongo transaction](./evidences/steps/step_8.1_transaction_mongodb.png)
 
+And finally, it is able to subscribe to the Kafka message queue
+
+![Mongo kafka](./evidences/steps/step_8.2_transaction_kafka.png)
+
+# Evidences
+
+**Notice that the number of pods running does not match the number of replicas in yaml files, this is due to the fact that my local setup is not able to handle such big computational burden and starts evicting pods, hence, I tested the cofniguration with only one replica per microservice**
+## Pods running 
+
+Notice that the invoice microservice is not even created because of the computational limit described above.
+
+![Pods running](./evidences/steps/pods_running_evidence.png)
+
+## Services running
+
+The load balancer makes it possible to access to microservices through localhost:
+
+![Services running](./evidences/steps/services_evidence.png)
+## Endpoints
+
+### Config
+
+![Config endpoint](./evidences/steps/step_1_config_endpoint_test.png)
+
+### Pay
+
+![Pay endpoint](./evidences/steps/step_2_pay_endpoint_test.png)
+
+In addition to receive POST requests, the service also is able to produce the message via Kafka.
+
+![Pay kafka](./evidences/steps/step_2_pay_post_kafka_message_sent.png)
+
+### Invoice
+
+![Invoice endpoint](./evidences/steps/step_7.3_invoice_endpoint_test.png)
+
+Is able to receive the message produced by pay-app successfully
+
+![Invoice kafka](./evidences/steps/invoice_logs_evidence.png)
+
+
+## Transaction
+
+![Transaction endpoint](./evidences/steps/step_2_transaction_endpoint_test.png)
+
+Is able to receive the message produced by pay-app successfully
+
+![Transaction kafka](./evidences/steps/step_2_transaction_recevied_message.png)
 # Microservicios con Spring Boot
 
 ![Architecture](./resources/microservicesarchitecture.png)
