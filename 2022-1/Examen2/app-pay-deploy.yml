@@ -19,3 +19,18 @@ spec:
         image: nelsonq2424/app-pay
         ports:
         - containerPort: 8010
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: app-pay-service
+ labels:
+  app: app-pay
+spec:
+ selector:
+  app: app-pay
+ ports:
+  - protocol: TCP
+    port: 8010
+    targetPort: 8010
+    name: http

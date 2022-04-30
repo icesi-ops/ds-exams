@@ -19,3 +19,20 @@ spec:
         image: nelsonq2424/app-invoice
         ports:
         - containerPort: 8006
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: app-invoice-service
+ labels:
+  app: app-invoice
+spec:
+ type: LoadBalancer
+ selector:
+  app: app-invoice
+ ports:
+  - protocol: TCP
+    port: 8010
+    targetPort: 8010
+    name: http

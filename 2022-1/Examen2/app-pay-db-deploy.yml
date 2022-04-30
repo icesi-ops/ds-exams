@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
-  name: pay-db
+  name: pay-db-replicaset
   labels:
     app: pay-db
 spec:
@@ -37,4 +37,3 @@ spec:
   - protocol: TCP
     port: 3306
     targetPort: 3306
-    name: http
