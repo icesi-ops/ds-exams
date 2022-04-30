@@ -5,6 +5,8 @@ microk8s.kubectl replace -f kafka-deployment.yml
 # 2. Despliegue de las bases de datos:
  2.1 MondoDB (para app-transaction): 
  microk8s.kubectl replace -f mongo.yml
+ 
+ 
  2.2 MySql (para app-pay): 
  microk8s.kubectl replace -f mysql.yml
 ![image](https://user-images.githubusercontent.com/47835629/166124873-ed9f359d-bd93-4fbf-b18b-d3ee7bb141de.png)
