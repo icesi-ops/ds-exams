@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pay-db
+  labels:
+    app: pay-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pay-db
+  template:
+    metadata:
+      labels:
+        app: pay-db
+    spec:
+      containers:
+      - name: pay-db
+        image: anamvgd/pay_db:2p
+        ports:
+        - containerPort: 3306
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: pay-db-service
+spec:
+  selector:
+   app: pay-db-service
+  ports:
+   - protocol: TCP
+     port: 3306
+     targetPort: 3306
