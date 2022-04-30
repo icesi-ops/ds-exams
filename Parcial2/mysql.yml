@@ -1,23 +1,24 @@
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
-  name: pay-db-replicaset
+  name: mysql
+  namespace: exam2
   labels:
-    app: pay-db
+    app: mysql
 spec:
   # modify replicas according to your case
   replicas: 2
   selector:
     matchLabels:
-      app: pay-db
+      app: mysql
   template:
     metadata:
       labels:
-        app: pay-db
+        app: mysql
     spec:
       containers:
       - name: pay-db
-        image: nelsonq2424/app-mysql
+        image: stigma137/mysql:latest
         ports:
         - containerPort: 3306
 
@@ -26,13 +27,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
- name: pay-db-service
+ name: mysql
+ namespace: exam2
  labels:
-  app: pay-db
+  app: mysql
 spec:
  type: ClusterIP
  selector:
-  app: pay-db
+  app: mysql
  ports:
   - protocol: TCP
     port: 3306

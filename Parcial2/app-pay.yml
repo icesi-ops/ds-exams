@@ -1,7 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pay-deployment
+  name: app-pay
+  namespace: exam2
   labels:
     app: app-pay
 spec:
@@ -23,7 +24,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
- name: app-pay-service
+ name: app-pay
+ namespace: exam2
  labels:
   app: app-pay
 spec:
