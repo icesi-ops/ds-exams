@@ -35,5 +35,5 @@ spec:
     app: pay-app
   ports:
     - protocol: TCP
-      port: 8810
+      port: 8010
       targetPort: 8010
