@@ -1,33 +1,33 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
-  name: pay-db
-  labels:
-    app: pay-db
+  name: bd-pay-clusterip
 spec:
-  replicas: 1
+  selector:
+    app: pay-bd
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: pay-bd-replicaset
+  labels:
+    app: pay-bd
+spec:
+  replicas: 2
   selector:
     matchLabels:
-      app: pay-db
+      app: pay-bd
   template:
     metadata:
       labels:
-        app: pay-db
+        app: pay-bd
     spec:
       containers:
-      - name: pay-db
-        image: anamvgd/pay_db:2p
+      - name: pay-bd
+        image: anamvgd/pay-db:2p
         ports:
         - containerPort: 3306
----
-kind: Service
-apiVersion: v1
-metadata:
-  name: pay-db-service
-spec:
-  selector:
-   app: pay-db-service
-  ports:
-   - protocol: TCP
-     port: 3306
-     targetPort: 3306
