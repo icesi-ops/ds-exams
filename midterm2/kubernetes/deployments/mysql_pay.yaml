@@ -17,8 +17,7 @@ metadata:
   labels:
     app: pay-bd
 spec:
-  # replicas: 2
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: pay-bd

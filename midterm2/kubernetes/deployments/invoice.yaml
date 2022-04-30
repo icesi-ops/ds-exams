@@ -5,7 +5,12 @@ metadata:
   labels:
     app: invoice-app
 spec:
-  replicas: 1
+  replicas: 2
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
   selector:
     matchLabels:
       app: invoice-app
@@ -23,7 +28,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: invoice-app-loadbalancer-service
+  name: invoice-app-lb
 spec:
   type: LoadBalancer
   selector:

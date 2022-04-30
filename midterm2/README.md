@@ -12,7 +12,7 @@ spring.cloud.config.uri=http://app-config:8888
 ```
 to
 ```
-spring.cloud.config.uri=http://${CONFIG_CLUSTERIP_SERVICE_SERVICE_HOST}:${CONFIG_CLUSTERIP_SERVICE_SERVICE_PORT}
+spring.cloud.config.uri=http://${CONFIG_NODEPORT_SERVICE_HOST}:${CONFIG_NODEPORT_SERVICE_PORT}
 ```
 
 Secondly, I had to fix MySQL database authentication. I changed the DB password in [app pay properties](./config/app-pay-dev.properties) to match MYSQL DB password expected in [docker image built from here](./resources/mysql/Dockerfile/)

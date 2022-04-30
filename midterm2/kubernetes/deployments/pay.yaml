@@ -5,7 +5,12 @@ metadata:
   labels:
     app: pay-app
 spec:
-  replicas: 1
+  replicas: 2
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
   selector:
     matchLabels:
       app: pay-app
@@ -23,7 +28,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: pay-app-loadbalancer-service
+  name: pay-app-lb
 spec:
   type: LoadBalancer
   selector:
