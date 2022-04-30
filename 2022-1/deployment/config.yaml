@@ -31,6 +31,11 @@ metadata:
     app: config-app
 spec:
   replicas: 6
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 2
   selector:
     matchLabels:
       app: config-app

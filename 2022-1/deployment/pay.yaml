@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pay-deployment
+  labels:
+    app: pay-app
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: pay-app
+  template:
+    metadata:
+      labels:
+        app: pay-app
+    spec:
+      containers:
+      - name: pay-app
+        image: anamvgd/app-pay:2parcial
+        ports:
+        - containerPort: 8010
