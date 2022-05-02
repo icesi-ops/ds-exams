@@ -73,11 +73,17 @@ Now we deploy the app-pay and app-invoice apps:
     kubectl create -f .\app-pay-deploy.yml
     
    ![imagen](https://user-images.githubusercontent.com/44851531/166124881-93ce9af1-ff58-478b-96f8-865a8a4a4a5b.png)
+   
+   ![imagen](https://user-images.githubusercontent.com/44851531/166125298-c703390b-9013-4589-b2b7-bcea6124fcc3.png)
+
 
   # App-invoice
     
     kubectl create -f .\app-invoice-deploy.yml
     
+    ![imagen](https://user-images.githubusercontent.com/44851531/166125257-9321b3fb-aab0-46b4-a1f9-390fd5032509.png)
+
+
     
     
   
