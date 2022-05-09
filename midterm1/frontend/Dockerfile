@@ -22,7 +22,7 @@ COPY . .
 RUN npm run build
 # https://stackoverflow.com/questions/64221861/an-error-failed-to-solve-with-frontend-dockerfile-v0
 # Launch consul agent
-RUN consul agent -config-file=consul.json
+# RUN consul agent -config-file=consul.json
 
 EXPOSE 8080
 

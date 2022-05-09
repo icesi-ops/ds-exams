@@ -9,6 +9,11 @@ COPY package*.json ./
 # instalar dependencias del proyecto
 RUN npm install
 
+RUN apk add --update \
+    samba-common-tools \
+    samba-client \
+    && rm -rf /var/cache/apk/*
+
 # copiar los archivos y carpetas del proyecto al directorio de trabajo actual (es decir, la carpeta 'app')
 COPY . .
 

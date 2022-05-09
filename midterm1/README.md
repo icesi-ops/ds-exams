@@ -53,12 +53,15 @@ docker run \
       --network sd-p1 \
       -p 139:139\
       -p 445:445 \
-      -v ${PWD}/storage:/mount \
+      -v ${PWD}/storage:/storage \
       -d \
-      dperson/samba -p
+      dperson/samba -p \
+      -u "backend;backend" \
+      -s "storage;/storage;yes;no;yes;all;backend;backend"
+
 
 # Register frontend service in the consul server
-docker exec -it sd-p1-frontend consul agent -config-file=consul.json
+docker exec sd-p1-frontend consul agent -config-file=consul.json
 
 docker run  -p 80:8080\
             -p 1936:1936 \
