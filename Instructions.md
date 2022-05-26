@@ -38,6 +38,6 @@ on the browser type <loadbalancer-external-ip>:8000
 
   ![](https://github.com/Legendary-Overlord/ds-exams/blob/master/evidences/helm%20status.png)
   
-  ![](https://github.com/Legendary-Overlord/ds-exams/tree/master/evidences/kubeall.png)
+  ![](https://github.com/Legendary-Overlord/ds-exams/blob/master/evidences/kubeall.png)
   
-  ![](https://github.com/Legendary-Overlord/ds-exams/tree/master/evidences/browser.png)
+  ![](https://github.com/Legendary-Overlord/ds-exams/blob/master/evidences/browser.png)
