@@ -2,6 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+#main app deployment values
 projectappdeployment:
   name: projectapp
   image: pcspam/projectapp:latest
@@ -15,6 +16,7 @@ projectappdeployment:
   livenessProbePath: /liveness
   readinessProbePath: /readiness
 
+#main app loadbalancer service values
 projectapploadbalancer:
   name: projectapploadbalancerservice
   app: projectapp
@@ -23,11 +25,13 @@ projectapploadbalancer:
     port: 8000
     targetPort: 8000
 
+#redis database deployment values
 redisdeployment:
     name: redis
     image: redis
     port: 6379
 
+#redis database ClusterIP service values
 redisservice:
   name: redissvc
   protocol: TCP
