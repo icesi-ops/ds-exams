@@ -32,7 +32,7 @@ This will list off all the services running in the kubernetes cluster.
 
 copy/paste on the browser the field corresponding to the loadbalancer's external ip.
 
-on the browser type "<loadbalancer-external-ip>:8000"
+on the browser type "[loadbalancer-external-ip]:8000"
 
 ## Evidences
 
