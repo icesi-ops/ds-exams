@@ -1,0 +1,35 @@
+# Default values for project-app.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+projectappdeployment:
+  name: projectapp
+  image: pcspam/projectapp:latest
+  port: 8000
+  env: REDIS_HOST
+  envvalue: $(REDISSVC_SERVICE_HOST)
+  replicas: 2
+  rollingupdate: RollingUpdate
+  maxSurge: 1
+  maxUnavailable: 1
+  livenessProbePath: /liveness
+  readinessProbePath: /readiness
+
+projectapploadbalancer:
+  name: projectapploadbalancerservice
+  app: projectapp
+  ports:
+    protocol: TCP
+    port: 8000
+    targetPort: 8000
+
+redisdeployment:
+    name: redis
+    image: redis
+    port: 6379
+
+redisservice:
+  name: redissvc
+  protocol: TCP
+  port: 6379
+  targetPort: 6379

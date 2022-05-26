@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.redisdeployment.name }}
+  labels:
+    app: {{ .Values.redisdeployment.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.redisdeployment.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.redisdeployment.name }}
+    spec:
+      containers:
+      - name: {{ .Values.redisdeployment.name }}
+        image: {{ .Values.redisdeployment.image }}
+        ports:
+        - containerPort: {{ .Values.redisdeployment.port }}
+          name: "rport"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.redisservice.name }}
+spec:
+  selector:
+   app: {{ .Values.redisdeployment.name }}
+  ports:
+   - protocol: {{ .Values.redisservice.protocol }}
+     port: {{ .Values.redisservice.port }}
+     targetPort: {{ .Values.redisservice.targetPort }}
+     name: default
