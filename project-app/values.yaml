@@ -27,6 +27,7 @@ projectapploadbalancer:
 
 #redis database deployment values
 redisdeployment:
+    replicas: 2
     name: redis
     image: redis
     port: 6379
