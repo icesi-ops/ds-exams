@@ -1,0 +1,45 @@
+http:
+  port: 8080
+admin:
+  port: 9876
+  host: localhost
+apiEndpoints:
+  fast-api:
+    host: localhost
+    paths: ['/fast-api','/fast-api/*']
+  frontend:
+    host: localhost
+    paths: ['/frontend','/frontend/*']
+
+serviceEndpoints:
+  fast-api:
+   url: 'http://loadbalancer/fast-api/'
+  frontend:
+   url: 'http://loadbalancer/frontend/'
+
+policies:
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - log
+  - oauth2
+  - proxy
+  - rate-limit
+pipelines:
+  default:
+    apiEndpoints:
+      - fast-api
+      - frontend
+    policies:
+      # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+      - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: fast-api
+              changeOrigin: true
+              prependPath:  false
+              ignorePath:   false
+              stripPath:    false
+
+
