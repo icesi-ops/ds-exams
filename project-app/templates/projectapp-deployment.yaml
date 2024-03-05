@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.projectappdeployment.name }}
+  labels:
+    app: {{ .Values.projectappdeployment.name }}
+spec:
+  replicas: {{ .Values.projectappdeployment.replicas }}
+  strategy:
+    rollingUpdate:
+      maxSurge: {{ .Values.projectappdeployment.maxSurge }}
+      maxUnavailable: {{ .Values.projectappdeployment.maxUnavailable }}
+    type: {{ .Values.projectappdeployment.rollingupdate }}
+  selector:
+    matchLabels:
+      app: {{ .Values.projectappdeployment.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.projectappdeployment.name }}
+    spec:
+      containers:
+      - name: {{ .Values.projectappdeployment.name }}
+        image: {{ .Values.projectappdeployment.image }}
+        ports:
+        - containerPort: {{ .Values.projectappdeployment.port }}
+        env:
+          - name: {{ .Values.projectappdeployment.env }}
+            value: {{ .Values.projectappdeployment.envvalue }}
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.projectappdeployment.livenessProbePath }}
+            port: {{ .Values.projectappdeployment.port }}
+          successThreshold: 1
+        readinessProbe:
+          httpGet:
+            path: {{ .Values.projectappdeployment.readinessProbePath }}
+            port: {{ .Values.projectappdeployment.port }}
+          successThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.projectapploadbalancer.name}}
+spec:
+  type: LoadBalancer
+  selector:
+    app: {{ .Values.projectapploadbalancer.app}}
+  ports:
+    - protocol: {{ .Values.projectapploadbalancer.ports.protocol}}
+      port: {{ .Values.projectapploadbalancer.ports.port}}
+      targetPort: {{ .Values.projectapploadbalancer.ports.targetPort}}
