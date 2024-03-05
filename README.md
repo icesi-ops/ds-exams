@@ -1,2 +1,2 @@
-# ds-exams
-All the exams for Distributed Course, enjoy !
+# Mid terms exams distributed systeems ICESI 2022-2
+
