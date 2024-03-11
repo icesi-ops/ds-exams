@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Frontend para Samba</title>
+</head>
+<body>
+    <h1>Subir y Listar Archivos PDF en Samba</h1>
+    
+    <!-- Formulario para subir archivos PDF -->
+    <form id="upload-form" enctype="multipart/form-data">
+        <input type="file" id="pdf-file" name="pdf" accept="application/pdf" required />
+        <button type="button" onclick="uploadPDF()">Subir PDF</button>
+    </form>
+    
+    <!-- Lista de archivos PDF -->
+    <h2>Archivos PDF:</h2>
+    <ul id="pdf-list"></ul>
+    
+    <script>
+        // Función para subir archivos PDF
+        function uploadPDF() {
+            var fileInput = document.getElementById('pdf-file');
+            var file = fileInput.files[0];
+            var formData = new FormData();
+            formData.append('pdf', file);
+            
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);
+                listPDFs(); // Actualiza la lista después de la carga
+            })
+            .catch(error => console.error('Error:', error));
+        }
+        
+        // Función para listar archivos PDF
+        function listPDFs() {
+            fetch('/get_pdf_list')
+            .then(response => response.json())
+            .then(data => {
+                var list = document.getElementById('pdf-list');
+                list.innerHTML = ''; // Limpia la lista actual
+                data.forEach(pdf => {
+                    var listItem = document.createElement('li');
+                    listItem.textContent = pdf;
+                    list.appendChild(listItem);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+        }
+        
+        // Listar archivos al cargar la página
+        document.addEventListener('DOMContentLoaded', listPDFs);
+    </script>
+</body>
+</html>
