@@ -2,59 +2,71 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Frontend para Samba</title>
+    <title>FileHub</title>
 </head>
 <body>
-    <h1>Subir y Listar Archivos PDF en Samba</h1>
+    <h1>Guarda tus archivos en Samba</h1>
     
-    <!-- Formulario para subir archivos PDF -->
+    <!-- Formulario para subir archivos -->
     <form id="upload-form" enctype="multipart/form-data">
-        <input type="file" id="pdf-file" name="pdf" accept="application/pdf" required />
-        <button type="button" onclick="uploadPDF()">Subir PDF</button>
+        <input type="file" id="file-input" name="file" required />
+        <button type="button" onclick="uploadFile()">Subir Archivo</button>
     </form>
     
-    <!-- Lista de archivos PDF -->
-    <h2>Archivos PDF:</h2>
-    <ul id="pdf-list"></ul>
+    <!-- Mensaje de estado -->
+    <div id="status-message"></div>
+    
+    <!-- Lista de archivos cargados -->
+    <h2>Archivos cargados:</h2>
+    <ul id="file-list"></ul>
     
     <script>
-        // Función para subir archivos PDF
-        function uploadPDF() {
-            var fileInput = document.getElementById('pdf-file');
+        // Función para subir archivos
+        function uploadFile() {
+            var fileInput = document.getElementById('file-input');
+            if (fileInput.files.length === 0) {
+                alert('Por favor, selecciona un archivo para subir.');
+                return;
+            }
             var file = fileInput.files[0];
             var formData = new FormData();
-            formData.append('pdf', file);
+            formData.append('file', file);
             
-            fetch('/upload', {
+            fetch('http://localhost:4567/upload', {
                 method: 'POST',
                 body: formData
             })
             .then(response => response.text())
             .then(data => {
-                alert(data);
-                listPDFs(); // Actualiza la lista después de la carga
+                document.getElementById('status-message').textContent = data;
+                listFiles(); // Actualiza la lista después de la carga
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => {
+                document.getElementById('status-message').textContent = 'Error: ' + error.message;
+            });
         }
         
-        // Función para listar archivos PDF
-        function listPDFs() {
-            fetch('/get_pdf_list')
+        // Función para listar todos los archivos
+        function listFiles() {
+            fetch('http://localhost:4567/get_file_list')
             .then(response => response.json())
             .then(data => {
-                var list = document.getElementById('pdf-list');
-                list.innerHTML = ''; // Limpia la lista actual
-                data.forEach(pdf => {
+                var list = document.getElementById('file-list');
+                list.innerHTML = '';
+                data.forEach(file => {
                     var listItem = document.createElement('li');
-                    listItem.textContent = pdf;
+                    listItem.textContent = file;
                     list.appendChild(listItem);
                 });
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('status-message').textContent = 'Error: ' + error.message;
+            });
         }
-        
+
         // Listar archivos al cargar la página
-        document.addEventListener('DOMContentLoaded', listPDFs);
+        document.addEventListener('DOMContentLoaded', listFiles);
     </script>
 </body>
 </html>

@@ -23,6 +23,13 @@
 
     <!-- Lista de dependencias necesarias para el proyecto -->
     <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- Dependencia para jcifs -->
         <dependency>
             <groupId>com.github.AgNO3</groupId>
