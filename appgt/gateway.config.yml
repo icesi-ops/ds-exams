@@ -1,0 +1,19 @@
+# api_gateway/gateway.config.yml
+http:
+  port: 8080
+admin:
+  port: 9876
+apiEndpoints:
+  files:
+    path: '/files/*'
+    methods: ['GET', 'POST']
+  health:
+    path: '/health'
+    methods: ['GET']
+serviceEndpoints:
+  files:
+    url: 'http://load_balancer'
+  health:
+    url: 'http://registry_discovery/health'
+policies:
+  - cors
