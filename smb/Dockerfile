@@ -4,13 +4,7 @@ FROM dperson/samba:latest
 COPY smb.conf /etc/samba/smb.conf
 
 # Crea el directorio de datos si no existe
-RUN mkdir -p /home/steb/distribuidos/data && \
-    # Añade un nuevo usuario de sistema 'usuario_especifico'
-    useradd user_samba && \
-    # Establece la contraseña del usuario (cambia 'tu_contraseña' por la contraseña real)
-    echo "user_samba:pass123." | chpasswd && \
-    # Añade el usuario a Samba y establece su contraseña
-    (echo "pass123."; echo "pass123.") | smbpasswd -a user_samba
+RUN mkdir -p /home/steb/distribuidos/data
 
 # Expone los puertos para los servicios de Samba
 EXPOSE 139 445
