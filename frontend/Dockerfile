@@ -3,15 +3,20 @@ FROM nginx:alpine
 
 # Elimina la configuración predeterminada de Nginx
 RUN rm /etc/nginx/conf.d/default.conf
+RUN apk --no-cache add curl
 
 # Copia la configuración personalizada de Nginx al contenedor
 COPY nginx.conf /etc/nginx/nginx.conf
+COPY register-service.sh register-service.sh
 
 # Copia el archivo index.html al contenedor
 COPY index.html /usr/share/nginx/html/index.html
 COPY styles.css /usr/share/nginx/html/
-# Expone el puerto 80
+
 EXPOSE 80
 
-# Inicia Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Set the entrypoint.sh script as executable
+RUN chmod +x /register-service.sh
+
+# Specify the entrypoint script to run when the container starts
+ENTRYPOINT ["/register-service.sh"]

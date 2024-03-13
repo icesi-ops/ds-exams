@@ -30,6 +30,12 @@
             <scope>compile</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.ecwid.consul</groupId>
+            <artifactId>consul-api</artifactId>
+            <version>1.4.5</version> <!-- Reemplaza con la última versión disponible -->
+        </dependency>
+
         <!-- Dependencia para jcifs -->
         <dependency>
             <groupId>com.github.AgNO3</groupId>

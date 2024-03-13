@@ -68,6 +68,11 @@ public class app {
                 return "Error al cargar el archivo en Samba: " + e.getMessage();
             }
         });
+
+        // Endpoint de salud
+        Spark.get("/health", (req, res) -> {
+            return "OK";
+        });
     }
 
     private static List<String> getFileListFromSamba() {
@@ -92,7 +97,6 @@ public class app {
         }
         return fileList;
     }
-
     private static void uploadToSamba(InputStream fileStream, String fileName) throws Exception {
         // La URL de Samba debe incluir la información de autenticación antes del servidor
         String authString = USERNAME + ":" + PASSWORD + "@";
@@ -115,7 +119,6 @@ public class app {
             e.printStackTrace();
         }
     }
-
     private static String getFileName(Part part) {
         for (String content : part.getHeader("content-disposition").split(";")) {
             if (content.trim().startsWith("filename")) {
