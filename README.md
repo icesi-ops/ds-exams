@@ -40,8 +40,8 @@
    docker compose up --build -d
 3. Despues vas a verificar que el stack este corrinedo dentro del docker desktop
 
-### Documentacion
-# Documentación breve de un servidor Samba en Docker
+# Documentacion
+## Documentación breve de un servidor Samba en Docker
 
 ## Introducción
 Samba es una implementación libre del protocolo de archivos compartidos de Windows que permite a los sistemas Unix/Linux compartir archivos e impresoras con los sistemas Windows. En este documento, se proporciona una guía para configurar un servidor Samba utilizando Docker.
