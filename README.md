@@ -41,11 +41,8 @@
 3. Despues vas a verificar que el stack este corrinedo dentro del docker desktop
 
 # Documentacion
-## Documentación breve de un servidor Samba en Docker
-
-## Introducción
+## Samba
 Samba es una implementación libre del protocolo de archivos compartidos de Windows que permite a los sistemas Unix/Linux compartir archivos e impresoras con los sistemas Windows. En este documento, se proporciona una guía para configurar un servidor Samba utilizando Docker.
-
 ## Dockerfile del servidor Samba
    ```Dockerfile
    FROM dperson/samba:latest
@@ -62,7 +59,7 @@ Samba es una implementación libre del protocolo de archivos compartidos de Wind
    #Comando para ejecutar Samba
    CMD ["smbd", "--foreground", "--no-process-group"]
 ```
-## Samba
+
 El archivo `smb.conf` contiene la configuración del servidor Samba. Define parámetros como el grupo de trabajo, el nombre del servidor, y las opciones de seguridad y compartición de archivos. Esta configuración permite personalizar el comportamiento y las funcionalidades del servidor Samba según las necesidades específicas del entorno.
 
 ### Configuracion
