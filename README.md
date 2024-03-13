@@ -62,7 +62,18 @@ Samba es una implementación libre del protocolo de archivos compartidos de Wind
    #Comando para ejecutar Samba
    CMD ["smbd", "--foreground", "--no-process-group"]
 ```
-## Configuracion Samba
+## Samba
+El archivo `smb.conf` contiene la configuración del servidor Samba. Define parámetros como el grupo de trabajo, el nombre del servidor, y las opciones de seguridad y compartición de archivos. Esta configuración permite personalizar el comportamiento y las funcionalidades del servidor Samba según las necesidades específicas del entorno.
+
+### Configuracion
 1. El archivo `smb.conf` contiene la configuración global de Samba, así como la definición de compartición de recursos.
 2. Se define un recurso compartido llamado storage_samba que permite a los usuarios autenticados acceder y escribir en el directorio /home/steb/distribuidos/data/.
 
+## Frontend
+El Frontend se compone de un HTML y un CSS basico, que se encarga principalmente cargar los archivos PDF y entregarselos al backend
+
+## Backend
+El Backend esta programado en Java 
+
+## Consul 
+Consul es una herramienta que facilita la gestión de servicios en entornos distribuidos. Permite registrar, descubrir y monitorear servicios de manera automática, simplificando la implementación y escalabilidad de aplicaciones distribuidas. Además, ofrece capacidades avanzadas de enrutamiento de servicios para mejorar la resiliencia y eficiencia de las aplicaciones.
