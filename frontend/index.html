@@ -22,6 +22,13 @@
     <!-- Lista de archivos cargados -->
     <h2>Archivos cargados:</h2>
     <ul id="file-list"></ul>
+
+    <!-- Formulario para eliminar archivos -->
+    <form id="delete-form">
+        <label for="delete-file">Seleccionar archivo para eliminar:</label>
+        <select id="delete-file" name="delete-file"></select>
+        <button type="button" onclick="deleteFile()">Eliminar Archivo</button>
+    </form>
     
     <script>
         // Función para previsualizar el archivo seleccionado
@@ -33,6 +40,44 @@
                 filePreview.textContent = fileName; // Muestra el nombre del archivo
                 filePreview.style.display = 'block'; // Muestra el campo de vista previa
             }
+        }
+
+        // Función para eliminar archivos
+        function deleteFile() {
+            var deleteSelect = document.getElementById('delete-file');
+            var selectedFileName = deleteSelect.options[deleteSelect.selectedIndex].value;
+
+            if (!selectedFileName) {
+                alert('Por favor, selecciona un archivo para eliminar.');
+                return;
+            }
+
+            fetch('http://localhost:4567/delete/' + encodeURIComponent(selectedFileName), {
+                method: 'DELETE'
+            })
+            .then(response => response.text())
+            .then(data => {
+                var statusMessage = document.getElementById('status-message');
+                statusMessage.textContent = data;
+                statusMessage.style.display = 'block'; // Muestra la ventana flotante
+
+                // Oculta la ventana flotante después de 5 segundos
+                setTimeout(function() {
+                    statusMessage.style.display = 'none';
+                }, 5000);
+
+                listFiles(); // Actualiza la lista después de la eliminación
+            })
+            .catch(error => {
+                var statusMessage = document.getElementById('status-message');
+                statusMessage.textContent = 'Error: ' + error.message;
+                statusMessage.style.display = 'block'; // Muestra la ventana flotante
+
+                // Oculta la ventana flotante después de 5 segundos
+                setTimeout(function() {
+                    statusMessage.style.display = 'none';
+                }, 5000);
+            });
         }
 
         // Función para subir archivos
@@ -97,7 +142,25 @@
             });
         }
         // Listar archivos al cargar la página
-        document.addEventListener('DOMContentLoaded', listFiles);
+        document.addEventListener('DOMContentLoaded', function() {
+            listFiles();
+            
+            fetch('http://localhost:4567/get_file_list')
+            .then(response => response.json())
+            .then(data => {
+                var deleteSelect = document.getElementById('delete-file');
+                data.forEach(file => {
+                    var option = document.createElement('option');
+                    option.value = file;
+                    option.textContent = file;
+                    deleteSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
     </script>
 </body>
 </html>

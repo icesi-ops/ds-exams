@@ -37,7 +37,7 @@ public class app {
 
         Spark.before((request, response) -> {
             response.header("Access-Control-Allow-Origin", "*");
-            response.header("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+            response.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, DELETE");
             response.type("application/json");
         });
 
@@ -69,10 +69,43 @@ public class app {
             }
         });
 
+        // Endpoint para borrar archivos
+        Spark.delete("/delete/:fileName", (request, response) -> {
+            String fileName = request.params(":fileName");
+            boolean deleted = deleteFileFromSamba(fileName);
+
+            if (deleted) {
+                return "Archivo eliminado exitosamente.";
+            } else {
+                response.status(500);
+                return "Error al eliminar el archivo desde Samba.";
+            }
+        });
+
         // Endpoint de salud
         Spark.get("/health", (req, res) -> {
             return "OK";
         });
+    }
+
+    private static boolean deleteFileFromSamba(String fileName) {
+        try {
+            String authString = USERNAME + ":" + PASSWORD + "@";
+            String sambaUrl = "smb://" + authString + SAMBA_SERVER.substring(6) + "/" + fileName;
+            SmbFile smbFile = new SmbFile(sambaUrl);
+
+            if (smbFile.exists()) {
+                smbFile.delete();
+                return true;
+            } else {
+                System.err.println("El archivo no existe en Samba.");
+                return false;
+            }
+        } catch (Exception e) {
+            System.err.println("Error al eliminar el archivo desde Samba: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
     }
 
     private static List<String> getFileListFromSamba() {

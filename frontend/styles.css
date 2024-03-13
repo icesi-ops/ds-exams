@@ -106,7 +106,55 @@ label[for="file-input"]:hover {
     border-radius: 5px;
     background-color: #f8f8f8;
     color: #333;
-    display: none; /* Inicialmente oculto */
+    display: none;
     font-family: 'Arial', sans-serif;
     text-align: center;
+}
+
+#delete-form {
+    max-width: 300px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#delete-file {
+    color: #5D3FD3;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+label[for="delete-file"] {
+    background-color: #8b879b;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    margin: 10px auto;
+}
+
+label[for="delete-file"]:hover {
+    background-color: #4731B5;
+}
+
+#delete-form button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #5D3FD3;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#delete-form button:hover {
+    background-color: #4731B5;
 }
