@@ -25,7 +25,7 @@ register_service() {
     local id_container=$(get_container_id)
     echo "IP DEL CONTENEDOR: '$ip'"
     payload='{
-      "ID": "'"$service_name"'-HealthCheck",
+      "ID": "'"$service_name"'-HealthCheck - '$id_container'",
       "Name": "'"$service_name"'-'$id_container'",
       "Tags": ["back"],
       "Address": "'$ip'",

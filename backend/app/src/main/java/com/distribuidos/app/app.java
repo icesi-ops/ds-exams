@@ -41,7 +41,7 @@ public class app {
             response.type("application/json");
         });
 
-        // Endpoint para listar archivos PDF
+        // Endpoint para listar archivos
         Spark.get("/get_file_list", (request, response) -> {
             List<String> fileList = getFileListFromSamba();
 
