@@ -6,7 +6,7 @@
 2. MySQL para la base de datos
 
 ## Como ejecutar
-## Instalación de Docker Compose en WSL
+## 1. Instalación de Docker Compose en WSL
 
 1. **Instalar Docker en Windows**: Asegúrate de tener Docker instalado y funcionando en tu sistema Windows. Puedes descargar e instalar Docker Desktop desde el sitio web oficial de Docker.
 
@@ -20,9 +20,25 @@
    ```bash
    sudo apt update
    sudo apt upgrade
-6. **Instalar Docker Compose**: Una vez en la distribución de Linux, puedes instalar Docker Compose ejecutando los siguientes comandos:`sudo apt install curl
-curl -fsSL https://get.docker.com -o get-docker.sh
-sudo sh get-docker.sh
-sudo usermod -aG docker $USER
-`
+6. **Instalar Docker Compose**: Una vez en la distribución de Linux, puedes instalar Docker Compose ejecutando los siguientes comandos:
+   ```bash
+   sudo apt install curl
+   curl -fsSL https://get.docker.com -o get-docker.sh
+   sudo sh get-docker.sh
+   sudo usermod -aG docker $USER
+7. **Verificar la Instalación**: Después de instalar Docker, verifica que esté funcionando correctamente ejecutando el siguiente comando:
+   ```bash
+   docker --version
+   docker-compose --version
+
+## 2. Descargar proyecto git
+## 3. Ejecutar proyecto
+1. Abre WSL y dirigte al directorio del proyecto recien descargado
+2. Dentro del directorio vas a ejecutar el siguiente comando
+   ```bash
+   docker compose up --build -d
+3. Despues vas a verificar que el stack este corrinedo dentro del docker desktop
+
+
+
 
