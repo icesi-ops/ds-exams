@@ -3,7 +3,7 @@ http:
   port: 8080
 
 admin:
-  port: 5555
+  port: 9876
   host: localhost
 
 appEndpoints:
@@ -15,9 +15,9 @@ appEndpoints:
     paths: ["/", "/*"]
 serviceEndpoints:
   appback:
-    url: "http://balancer/app/"
+    url: "http://loadbalancer/app/"
   appfront:
-    url: "http://balancer/"
+    url: "http://loadbalancer/"
 
 policies:
   - basic-auth

@@ -1,7 +1,7 @@
 # Core
 db:
   redis:
-    host: eg-data-store-parcial
+    host: redis_data
     port: 6379
     namespace: EG
 
