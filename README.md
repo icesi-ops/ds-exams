@@ -5,7 +5,7 @@
 1. Java para el Backend
 2. MySQL para la base de datos
 
-## Como ejecutar
+# Como ejecutar
 ## 1. Instalación de Docker Compose en WSL
 
 1. **Instalar Docker en Windows**: Asegúrate de tener Docker instalado y funcionando en tu sistema Windows. Puedes descargar e instalar Docker Desktop desde el sitio web oficial de Docker.
