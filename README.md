@@ -32,6 +32,7 @@
    docker-compose --version
 
 ## 2. Descargar proyecto git
+``git clone https://github.com/Amilcar-Steban/ds-exams.git``
 ## 3. Ejecutar proyecto
 1. Abre WSL y dirigte al directorio del proyecto recien descargado
 2. Dentro del directorio vas a ejecutar el siguiente comando
