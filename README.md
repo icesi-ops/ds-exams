@@ -1,7 +1,7 @@
 # Parcial 1 - Sistemas distribuidos
 - Por:
 - Amilcar Steban Rodriguez - A00369769
-- Samuel Guerrero
+- Samuel Guerrero - A00365567
 
 ## Parametros para parcial
 1. Java para el Backend
