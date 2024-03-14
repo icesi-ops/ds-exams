@@ -5,7 +5,12 @@
 
 ## Parametros para parcial
 1. Java para el Backend
-2. MySQL para la base de datos
+2. SAMBA como almacenamiento centralizado
+3. Nginx como server para el front
+4. Spark para los CORS
+5. Redis para la base de datos del ApiGateway
+6. Consul
+7. HAproxy para el balanceador de cargas
 
 # Como ejecutar
 ## 1. Instalación de Docker Compose en WSL
