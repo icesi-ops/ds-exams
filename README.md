@@ -1,5 +1,7 @@
 # Parcial 1 - Sistemas distribuidos
-- Por: Juan Esteban Amilcar y Samuel Guerrero
+- Por:
+- Amilcar Steban Rodriguez - A00369769
+- Samuel Guerrero
 
 ## Parametros para parcial
 1. Java para el Backend
@@ -67,10 +69,54 @@ El archivo `smb.conf` contiene la configuración del servidor Samba. Define par�
 2. Se define un recurso compartido llamado storage_samba que permite a los usuarios autenticados acceder y escribir en el directorio /home/steb/distribuidos/data/.
 
 ## Frontend
-El Frontend se compone de un HTML y un CSS basico, que se encarga principalmente cargar los archivos PDF y entregarselos al backend
+El Frontend se compone de un HTML y un CSS basico, que se encarga principalmente cargar los archivos PDF y entregarselos al backend y ademas de realizar la función de eliminar dichos archivos. Para este Front usamos nginx como servidor para subir la app y usamos sus configuraciones para poder realizar peticiones al backend. Estos son los comandos para crear el front:
+
+```
+sudo docker build -t frontend:0.1.0 .
+sudo docker run -d -p 8000:80 --network microparcial --name front-app frontend:0.1.0
+
+sudo docker build -t frontend2:0.1.0 .
+sudo docker run -d -p 8001:80 --network microparcial --name front-app2 frontend2:0.1.0
+```
+
+
 
 ## Backend
-El Backend esta programado en Java 
+El Backend esta programado en Java, utiliza spark para manejar los CORS y la librería SMB para poder realizar peticiones a SAMBA que es el almacenamiento centralizado que estamos usando para este proyecto.
+
+Las funciones del backend en este caso son /upload /delete /get_list_files que son los requerimientos básicos para que funcione correctamente una app de almacenamiento. Estos son los comandos necesarios para crear el jar del programa back y para ejecutar dos instancias del backend.
+
+```
+   commands backend:
+
+mvn clean compile assembly:single //ejecutar en app/ para generar el jar
+sudo docker build -t backendapp:0.1.0 .
+sudo docker run -d -p 4567:4567 --network microparcial --name backendsmb backendapp:0.1.0
+sudo docker build -t backendapp2:0.1.0 .
+sudo docker run -d -p 4568:4567 --network microparcial --name backendsmb2 backendapp2:0.1.0
+
+
+```
 
 ## Consul 
-Consul es una herramienta que facilita la gestión de servicios en entornos distribuidos. Permite registrar, descubrir y monitorear servicios de manera automática, simplificando la implementación y escalabilidad de aplicaciones distribuidas. Además, ofrece capacidades avanzadas de enrutamiento de servicios para mejorar la resiliencia y eficiencia de las aplicaciones.
+Consul es una herramienta que facilita la gestión de servicios en entornos distribuidos. Permite registrar, descubrir y monitorear servicios de manera automática, simplificando la implementación y escalabilidad de aplicaciones distribuidas. Además, ofrece capacidades avanzadas de enrutamiento de servicios para mejorar la resiliencia y eficiencia de las aplicaciones. Estos son los comandos para crear el contenedor del consul:
+
+```
+docker run -d -p 8500:8500 -p 8600:8600/udp --network microparcial --name consul consul:1.15 agent -server -bootstrap-expect 1 -ui -data-dir /tmp -client=0.0.0.0
+```
+
+## Api Gateway
+Básicamente recibe las peticiones url y las comparte al load balancer segun su tipo, por ejemplo la ruta "/" redirige al front de la app. La configuración de este Api simplemente añade los endpoint y les da unas caracteristicas para que funcionen correctamente.
+
+Los comandos para que funcione el APIGateway son los siguientes:
+```
+Crear la imagen:
+docker build -t express-gw:0.1.0 .
+
+Crear la base de datos redis:
+docker run --network microparcial -d --name redis_data -p 6379:6379 redis:alpine
+
+correr el contenedor Gateway
+docker run -d --name express-gateway --network microparcial -v $(pwd):/var/lib/eg -p 8080:8080 -p 5555:9876 express-gateway
+```
+Este crea un volumen docker en la ruta actual/var/lib/eg y usa los puertos 8080 y 9876 paraa redirigir las peticiones y editar las configuraciones del usuario admin (opcional)
