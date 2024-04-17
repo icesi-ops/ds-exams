@@ -1,12 +1,12 @@
 replicaCount: 1
 
 image:
-  repository: localhost:5000/nginx
+  repository: nginx
   tag: "1.17.0"
   pullPolicy: IfNotPresent
 
 service:
   name: nginx-service
-  type: ClusterIP
+  type: NodePort
   port: 8080
-  targetPort: 9000
+  targetPort: 80
