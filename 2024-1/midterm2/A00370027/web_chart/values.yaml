@@ -1,0 +1,12 @@
+replicaCount: 1
+
+image:
+  repository: nginx
+  tag: "1.17.0"
+  pullPolicy: IfNotPresent
+
+service:
+  name: nginx-service
+  type: NodePort
+  port: 8080
+  targetPort: 80
